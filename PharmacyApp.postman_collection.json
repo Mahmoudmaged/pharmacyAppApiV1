@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "55e4ab40-a5b4-480d-8b27-b01b2c77b43b",
+		"_postman_id": "53137d78-2bd2-4f40-842d-306aa5a23f80",
 		"name": "PharmacyApp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9100371"
+		"_exporter_id": "19019497"
 	},
 	"item": [
 		{
@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"country\": \"Egypt\",\r\n    \"email\": \"mahmoudElwan460@gmail.com\"\r\n \r\n}",
+									"raw": "{\r\n    \"country\": \"Egypt\",\r\n    \"email\": \"mahmoudElwan460@gmail.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -47,7 +47,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"seekerteam32@gmail.com\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\"\r\n}",
+									"raw": "{\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"mahmoudElwan460@gmail.com\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -107,7 +107,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"mahmoudElwan450@gmail.com\",\r\n    \"password\": \"Mahmoud@123\"\r\n    \r\n}",
+									"raw": "{\r\n    \"email\": \"mahmoudElwan460@gmail.com\",\r\n    \"password\": \"Mahmoud@123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -695,7 +695,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
 								"type": "text"
 							}
 						],
@@ -704,18 +704,21 @@
 							"formdata": [
 								{
 									"key": "name[AR]",
-									"value": "ايفون",
+									"value": "ايفون نت",
 									"type": "text"
 								},
 								{
 									"key": "name[EN]",
-									"value": "Iphonexs                       juhuihuijh",
+									"value": "Ipho",
 									"type": "text"
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/E:/course route/frontend/seesions/images/images.jpg"
+									"src": [
+										"/E:/course route/frontend/seesions/images/images.jpg",
+										"/D:/2022/Assets/client-2.png"
+									]
 								}
 							]
 						},
@@ -743,7 +746,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
 								"type": "text"
 							}
 						],
@@ -771,19 +774,23 @@
 									"type": "text"
 								},
 								{
-									"key": "brandIds",
-									"value": "65b659e909f629af633ae8c4",
+									"key": "brandIds[0]",
+									"value": "65bd7076afde5d71b0542978",
 									"type": "text"
 								},
 								{
 									"key": "brandIds",
-									"value": "65b659e909f629af633ae8c4",
-									"type": "text"
+									"value": "",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/E:/course route/frontend/seesions/images/2 - Copy.jpg"
+									"src": [
+										"/E:/course route/frontend/seesions/images/2 - Copy.jpg",
+										"/D:/2022/Assets/client-6.png"
+									]
 								}
 							]
 						},
@@ -973,6 +980,294 @@
 							"path": [
 								"category",
 								"65b67337ee0b7f6a62cd3abf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "medicine",
+			"item": [
+				{
+					"name": "add medicine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "بانادول",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "panadol",
+									"type": "text"
+								},
+								{
+									"key": "description[AR]",
+									"value": "وصف العلاج",
+									"type": "text"
+								},
+								{
+									"key": "description[EN]",
+									"value": "the description",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/D:/2022/Assets/client-2.png",
+										"/D:/2022/Assets/client-4.png",
+										"/D:/2022/Assets/client-5.png"
+									]
+								},
+								{
+									"key": "category",
+									"value": "65bd70e8afde5d71b054298e",
+									"type": "text"
+								},
+								{
+									"key": "brand",
+									"value": "65bd7076afde5d71b0542978",
+									"type": "text"
+								},
+								{
+									"key": "mainPrice",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "discountPercent",
+									"value": "20",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "isDrug",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "sideEffects[0]",
+									"value": "side effect test1",
+									"type": "text"
+								},
+								{
+									"key": "sideEffects[1]",
+									"value": "side effect test3",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update info",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {\"EN\": \"Panadol\", \"AR\": \"بانادول\" },\r\n    \"discountPercent\": 50,\r\n    \"isDrug\": false\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65bd80ef1ea0cfa3120a0ec9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65bd80ef1ea0cfa3120a0ec9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete medicine image",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dest\": \"uploads/medicine/AXh6VuOv9izX_dJ8oH13N_client-1.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/image/65bd8a08d643bad26b7f6f38",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"image",
+								"65bd8a08d643bad26b7f6f38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add medicine image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/2022/Assets/client-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/image/65bd8a08d643bad26b7f6f38",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"image",
+								"65bd8a08d643bad26b7f6f38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete medicine",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65bd8d8c7a884b13ebec1215",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65bd8d8c7a884b13ebec1215"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get medicines",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65bd7076afde5d71b0542978/medicine",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65bd7076afde5d71b0542978",
+								"medicine"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single medicine",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65bd901a5247891055ed5832",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65bd901a5247891055ed5832"
 							]
 						}
 					},
