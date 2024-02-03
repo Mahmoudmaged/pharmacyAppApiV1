@@ -1,0 +1,990 @@
+{
+	"info": {
+		"_postman_id": "55e4ab40-a5b4-480d-8b27-b01b2c77b43b",
+		"name": "PharmacyApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9100371"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "client",
+					"item": [
+						{
+							"name": "pre signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"country\": \"Egypt\",\r\n    \"email\": \"mahmoudElwan460@gmail.com\"\r\n \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/pre/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"pre",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "complete signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"seekerteam32@gmail.com\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register new admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"mahmoudElwan460@gmail.com\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/registerAdmin",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"registerAdmin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"mahmoudElwan450@gmail.com\",\r\n    \"password\": \"Mahmoud@123\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/login",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "confirmEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\":\"0032\",\r\n    \"email\":\"seekerteam32@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/confirmEmail",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"confirmEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request forget password code",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"seekerteam32@gmail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/sendForgetCode",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"sendForgetCode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mahmoudelwan450@gmail.com\",\r\n    \"forgetCode\":\"1111\",\r\n    \"password\":\"Mahmoud@123\",\r\n    \"cPasswords\":\"Mahmoud@123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/forgetPassword",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new confirm email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"seekerteam32@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/newConfirmEmail",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"newConfirmEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request new token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2NDY4MTQ1LCJleHAiOjE3MDY1NTQ1NDV9._qiFQJjqJtcyBT5OD4WFIKANUwI9Rjv_Pdmc_0voW48\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/newToken",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"newToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "privilege",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"getUser\",\r\n    \"label\": \"system\"\r\n    // enum[\r\n    //     \"System\",\r\n    //     'Category',\r\n    //     \"Brand\",\r\n    // ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update privilege",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"updateCategory\",\r\n    \"label\":\"Category\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete  privilege",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiI2NWI1OWM3YWNmOGMxY2JhYjQ1NjU5MGQiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY1NDM0NjYsImV4cCI6MTczODA3OTQ2Nn0.UN_RTcKwQRbReVYr805eVT6OOx9ODCJFlb5kDyEwG04",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"admin\", // unique name\r\n    \"privileges\": [\r\n        \"65b596f330af6b936fd84317\"  // privilegeId _id\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add  privilege to role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2NDY4MTQ1LCJleHAiOjE3MzgwMDQxNDV9.kbFBu-L0DOLQr9HHo5YoYXcACiaDYqDDV525ReKyfXM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"privileges\": [\r\n        \"65b7af53cb10821dd76095db\",\r\n        \"65b7af61cb10821dd76095e2\",\r\n        \"65b7afbdcb10821dd76095e8\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b59c7acf8c1cbab456590d/add",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b59c7acf8c1cbab456590d",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update  role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"admin\",\r\n    \"privileges\": [\r\n        \"65b596f330af6b936fd84317\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b59c7acf8c1cbab456590d/add",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b59c7acf8c1cbab456590d",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete privilege",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b57e13e4a4b259473e064c/privilege/65b59984a9830f118a616854",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b57e13e4a4b259473e064c",
+								"privilege",
+								"65b59984a9830f118a616854"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b57e13e4a4b259473e064c",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b57e13e4a4b259473e064c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"admin\",\r\n    \"privileges\": [\r\n        \"65b56836a9254413004d29f7\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "brand",
+			"item": [
+				{
+					"name": "get brand list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get brand by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65b659e909f629af633ae8c4",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65b659e909f629af633ae8c4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "ايفون",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "Iphonexs                       juhuihuijh",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/images.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65b67b3adaad4be983ffb7f3",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65b67b3adaad4be983ffb7f3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "ايفون",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "Iphonexs                       juhuihuijh",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/images.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "جلديه",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "skin desies",
+									"type": "text"
+								},
+								{
+									"key": "description[AR]",
+									"value": "تتتتت تتتتتت تتت 4785 تهتهته84868hhhhh",
+									"type": "text"
+								},
+								{
+									"key": "description[EN]",
+									"value": "joiouy 66 hiuyh iil56",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/2 - Copy.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "جلديه",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "skin desies",
+									"type": "text"
+								},
+								{
+									"key": "description[AR]",
+									"value": "تتتتت تتتتتت تتت 4785 تهتهته84868hhhhh",
+									"type": "text"
+								},
+								{
+									"key": "description[EN]",
+									"value": "joiouy 66 hiuyh iil56",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/2 - Copy.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65b67337ee0b7f6a62cd3abf",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65b67337ee0b7f6a62cd3abf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add brand to category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brandIds\":[\"65b66a903dffb7f4b7d81a82\" , \"65b659e909f629af633ae8c4\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65b67337ee0b7f6a62cd3abf/addBrand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65b67337ee0b7f6a62cd3abf",
+								"addBrand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove brand from category Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brandIds\":[\"65b66a903dffb7f4b7d81a82\" , \"65b659e909f629af633ae8c4\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65b67337ee0b7f6a62cd3abf/removeBrand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65b67337ee0b7f6a62cd3abf",
+								"removeBrand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65b67337ee0b7f6a62cd3abf",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65b67337ee0b7f6a62cd3abf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "pharmacyBaseURL",
+			"value": "http://localhost:5000"
+		}
+	]
+}
