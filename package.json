@@ -34,6 +34,7 @@
     "pdfkit": "^0.13.0",
     "slugify": "^1.6.6",
     "socket.io": "^4.6.1",
-    "stripe": "^12.1.1"
+    "stripe": "^12.1.1",
+    "underscore": "^1.13.6"
   }
 }
