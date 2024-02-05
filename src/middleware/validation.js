@@ -32,6 +32,7 @@ export const generalFields = {
     originalname: joi.string().required(),
     fieldname: joi.string().required(),
     dest: joi.string(),
+    uniqueFolder: joi.string(),
   }),
 
   headers: joi.string().required(),

@@ -52,7 +52,7 @@ router.delete(
 // get all medicines || of category || of brand
 router.get(
   "/",
-  auth(medicineEndPoint.get),
+  auth(medicineEndPoint.read),
   validation(validators.getMedicines),
   medicineController.getMedicines
 );
@@ -60,14 +60,14 @@ router.get(
 // search medicine
 router.get(
   "/search",
-  auth(medicineEndPoint.get),
+  auth(medicineEndPoint.read),
   medicineController.searchMedicine
 );
 
 // get single medicine
 router.get(
   "/:id",
-  auth(medicineEndPoint.get),
+  auth(medicineEndPoint.read),
   validation(validators.deletegetMedicine),
   medicineController.singleMedicine
 );

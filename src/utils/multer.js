@@ -17,7 +17,13 @@ export function diskFileUpload(customPath = "general", customValidation = []) {
       if (customPath == "medicine") {
         const medicineFolder = nanoid();
         req.medicineFolder = medicineFolder;
+        file.uniqueFolder = medicineFolder;
         fullPath = `${fullPath}/${medicineFolder}`;
+      }
+      if (customPath == "user") {
+        const userId = req.user.id;
+        fullPath = `${fullPath}/${userId}`;
+        file.uniqueFolder = userId;
       }
       if (!fs.existsSync(fullPath)) {
         fs.mkdirSync(fullPath, { recursive: true });
@@ -26,7 +32,7 @@ export function diskFileUpload(customPath = "general", customValidation = []) {
     },
     filename: (req, file, cb) => {
       const uniqueFileName = nanoid() + "_" + file.originalname;
-      file.dest = `uploads/${customPath}/${uniqueFileName}`;
+      file.dest = `uploads/${customPath}/${file.uniqueFolder}/${uniqueFileName}`;
       cb(null, uniqueFileName);
     },
   });
