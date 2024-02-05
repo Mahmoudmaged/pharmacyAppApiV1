@@ -139,3 +139,18 @@ export const singleMedicine = asyncHandler(async (req, res, next) => {
   if (!medicine) return next(new Error("Invalid medicine id!", { cause: 400 }));
   return res.json({ message: "Done", medicine });
 });
+
+export const searchMedicine = asyncHandler(async (req, res, next) => {
+  const { keyword } = req.query;
+  const medicines = await Medicine.find({
+    $or: [
+      { "name.EN": { $regex: keyword, $options: "i" } },
+      { "name.AR": { $regex: keyword } },
+      { "description.EN": { $regex: keyword, $options: "i" } },
+      { "description.AR": { $regex: keyword } },
+    ],
+  });
+
+  // paginate // TODO
+  return res.json({ message: "Done", medicines });
+});

@@ -11,7 +11,6 @@ const router = Router({ mergeParams: true });
 router.post(
   "/",
   auth(medicineEndPoint.create),
-  // add folder for each medicine "edit multer" // TODO
   diskFileUpload("medicine", fileValidation.image).array("images"),
   validation(validators.createMedicine),
   medicineController.createMedicine
@@ -58,6 +57,13 @@ router.get(
   medicineController.getMedicines
 );
 
+// search medicine
+router.get(
+  "/search",
+  auth(medicineEndPoint.get),
+  medicineController.searchMedicine
+);
+
 // get single medicine
 router.get(
   "/:id",
@@ -65,7 +71,5 @@ router.get(
   validation(validators.deletegetMedicine),
   medicineController.singleMedicine
 );
-
-// search medicine
 
 export default router;
