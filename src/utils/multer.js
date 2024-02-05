@@ -11,13 +11,18 @@ export const fileValidation = {
   video: ["video/mp4"],
 };
 export function diskFileUpload(customPath = "general", customValidation = []) {
-  const fullPath = path.join(__dirname, `../uploads/${customPath}`);
-  if (!fs.existsSync(fullPath)) {
-    fs.mkdirSync(fullPath, { recursive: true });
-  }
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, fullPath);
+      let fullPath = path.join(__dirname, `../uploads/${customPath}`);
+      if (customPath == "medicine") {
+        const medicineFolder = nanoid();
+        req.medicineFolder = medicineFolder;
+        fullPath = `${fullPath}/${medicineFolder}`;
+      }
+      if (!fs.existsSync(fullPath)) {
+        fs.mkdirSync(fullPath, { recursive: true });
+      }
+      return cb(null, fullPath);
     },
     filename: (req, file, cb) => {
       const uniqueFileName = nanoid() + "_" + file.originalname;

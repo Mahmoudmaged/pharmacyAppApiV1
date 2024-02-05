@@ -40,7 +40,6 @@ export const generalFields = {
 export const validation = (schema, considerHeaders = false) => {
   return (req, res, next) => {
     let inputsData = { ...req.body, ...req.query, ...req.params };
-    console.log({ inputsData });
     if (req.file || req.files) {
       inputsData.file = req.file || req.files;
     }

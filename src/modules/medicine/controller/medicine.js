@@ -36,6 +36,7 @@ export const createMedicine = asyncHandler(async (req, res, next) => {
     images: req.files.map((file) => file.dest),
     createdBy: req.user._id,
     sideEffects: _.uniq(sideEffects),
+    imageFolderName: req.medicineFolder,
   });
 
   return res.status(201).json({ message: "Done", medicine });

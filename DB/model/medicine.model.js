@@ -26,6 +26,7 @@ const medicineSchema = new Schema(
     salePrice: { type: Number },
     isDrug: { type: Boolean, required: true },
     images: [{ type: String, required: true }],
+    imageFolderName: { type: String, required: true, unique: true },
     brand: { type: Types.ObjectId, ref: "Brand" },
     category: { type: Types.ObjectId, ref: "Category" },
     sideEffects: [{ type: String, required: true }],
