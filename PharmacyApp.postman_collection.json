@@ -997,7 +997,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDcxNzE3OTQsImV4cCI6MTcwNzI1ODE5NH0.zYbZo9KB0Iaw18ZSQMblMaHPaa4HRFipnI1b6gLMODQ",
 								"type": "text"
 							}
 						],
@@ -1006,12 +1006,12 @@
 							"formdata": [
 								{
 									"key": "name[AR]",
-									"value": "بانادول",
+									"value": "بن",
 									"type": "text"
 								},
 								{
 									"key": "name[EN]",
-									"value": "panadol",
+									"value": "pp",
 									"type": "text"
 								},
 								{
@@ -1027,11 +1027,7 @@
 								{
 									"key": "images",
 									"type": "file",
-									"src": [
-										"/D:/2022/Assets/client-2.png",
-										"/D:/2022/Assets/client-4.png",
-										"/D:/2022/Assets/client-5.png"
-									]
+									"src": "/D:/2022/Assets/client-1.png"
 								},
 								{
 									"key": "category",
@@ -1096,13 +1092,13 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5MTM3MjIsImV4cCI6MTcwNzAwMDEyMn0.YrAO7PnNIpOA_KSYkb8qU1D7NXN2Ysohc_LByQqzAYg",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDY5NzEyNzMsImV4cCI6MTcwNzA1NzY3M30.8oCXEiXo_CbU3XDN-rrr2lXm2mab6cjZ4uLpL9P3nHE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": {\"EN\": \"Panadol\", \"AR\": \"بانادول\" },\r\n    \"discountPercent\": 50,\r\n    \"isDrug\": false\r\n\r\n}",
+							"raw": "{\r\n    \"name\": {\"EN\": \"Panadol\", \"AR\": \"بانادول\" },\r\n    \"discountPercent\": 50,\r\n    \"isDrug\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1268,6 +1264,99 @@
 							"path": [
 								"medicine",
 								"65bd901a5247891055ed5832"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDcxNzE3OTQsImV4cCI6MTcwNzI1ODE5NH0.zYbZo9KB0Iaw18ZSQMblMaHPaa4HRFipnI1b6gLMODQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/search?keyword=k",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "k"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDcxNzE3OTQsImV4cCI6MTcwNzI1ODE5NH0.zYbZo9KB0Iaw18ZSQMblMaHPaa4HRFipnI1b6gLMODQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/user/profile",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add profile pic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmQ2ZTc2ODIyODBlZjU5MzgyNDU5OSIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDcxNzE3OTQsImV4cCI6MTcwNzI1ODE5NH0.zYbZo9KB0Iaw18ZSQMblMaHPaa4HRFipnI1b6gLMODQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/2022/Assets/client-2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/user/profilePic",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"user",
+								"profilePic"
 							]
 						}
 					},
