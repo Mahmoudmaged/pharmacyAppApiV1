@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const profile = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id).select(
-    "email fullName image phone address gender status country -_id "
+    "email fullName image phone address gender status -_id height weight blood chronicDiseases"
   );
   return res.json({ message: "Done", user });
 });

@@ -2,12 +2,22 @@ import mongoose, { Schema, Types, model } from "mongoose";
 const userSchema = new Schema(
   {
     fullName: {
-      type: String,
-      // required: [true, 'fullName is required'],
-      min: [2, "minimum length is 2 char"],
-      max: [20, "max length is 20 char"],
-      lowercase: true,
+      AR: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+      },
+      EN: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+      },
     },
+
     email: {
       type: String,
       unique: [true, "email must be unique value"],
@@ -21,11 +31,23 @@ const userSchema = new Schema(
     phone: {
       type: [Object],
     },
-    address: [Object],
     gender: {
-      type: String,
-      default: "male",
-      enum: ["male", "female"],
+      AR: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        enum: ["ذكر", "انثى"],
+      },
+      EN: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        enum: ["male", "female"],
+      },
     },
     DOB: String,
     role: {
@@ -34,7 +56,6 @@ const userSchema = new Schema(
       required: true,
       default: "65b6a78413524f005feca52a",
     },
-
     status: {
       type: String,
       default: "offline",
@@ -68,7 +89,15 @@ const userSchema = new Schema(
       default: "SYSTEM",
       enum: ["SYSTEM", "facebook", "GOOGLE"],
     },
-    country: { type: String, lowercase: true },
+    address: {
+      country: { type: String, lowercase: true },
+      city: { type: String, lowercase: true },
+      gov: { type: String, lowercase: true },
+    },
+    height: { type: Number },
+    weight: { type: Number },
+    blood: { type: Number },
+    chronicDiseases: [{ type: Types.ObjectId, ref: "ChronicDisease" }],
     socketId: String,
   },
   {
