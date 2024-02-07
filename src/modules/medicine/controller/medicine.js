@@ -2,6 +2,8 @@ import { asyncHandler } from "../../../utils/errorHandling.js";
 import Medicine from "./../../../../DB/model/medicine.model.js";
 import Category from "./../../../../DB/model/Category.model.js";
 import Brand from "./../../../../DB/model/Brand.model.js";
+import { formatPrice } from "./../medicine.service.js";
+import Variant from "../../../../DB/model/variant.model.js";
 import slugify from "slugify";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -11,8 +13,16 @@ import _ from "underscore";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const createMedicine = asyncHandler(async (req, res, next) => {
-  const { name, category, brand, mainPrice, discountPercent, sideEffects } =
-    req.body;
+  const {
+    name,
+    category,
+    brand,
+    mainPrice,
+    discountPercent,
+    sideEffects,
+    size,
+    color,
+  } = req.body;
   // check medicine existence
   if (
     await Medicine.findOne({
@@ -32,12 +42,21 @@ export const createMedicine = asyncHandler(async (req, res, next) => {
   const medicine = await Medicine.create({
     ...req.body,
     slug: slugify(name.EN),
-    salePrice: mainPrice - (mainPrice * discountPercent || 0) / 100,
+    salePrice: formatPrice(
+      mainPrice - (mainPrice * discountPercent || 0) / 100
+    ),
     images: req.files.map((file) => file.dest),
     createdBy: req.user._id,
     sideEffects: _.uniq(sideEffects),
     imageFolderName: req.medicineFolder,
   });
+
+  if (size || color)
+    await Variant.create({
+      medicie: medicine._id,
+      size: size || "",
+      color: color || "",
+    });
 
   return res.status(201).json({ message: "Done", medicine });
 });

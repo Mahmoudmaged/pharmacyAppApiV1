@@ -25,6 +25,7 @@ const medicineSchema = new Schema(
     discountPercent: { type: Number, min: 0, max: 100 },
     salePrice: { type: Number },
     isDrug: { type: Boolean, required: true },
+    soldQuantity: { type: Number, default: 0 },
     images: [{ type: String, required: true }],
     imageFolderName: { type: String, required: true, unique: true },
     brand: { type: Types.ObjectId, ref: "Brand" },
@@ -47,6 +48,12 @@ const medicineSchema = new Schema(
     timestamps: true,
   }
 );
+
+medicineSchema.virtual("variant", {
+  ref: "Variant",
+  localField: "_id",
+  foreignField: "medicine",
+});
 
 const medicineModel =
   mongoose.models.Medicine || model("Medicine", medicineSchema);

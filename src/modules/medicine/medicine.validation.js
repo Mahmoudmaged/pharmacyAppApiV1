@@ -26,6 +26,8 @@ export const createMedicine = joi
         .required(),
     }),
     mainPrice: joi.number().required(),
+    size: joi.string(),
+    color: joi.string(),
     discountPercent: joi.number().min(0).max(100),
     isDrug: joi.boolean().required(),
     file: joi.array().items(generalFields.file.required()).required(),
