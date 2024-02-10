@@ -30,6 +30,7 @@ export function diskFileUpload(customPath = "general", customValidation = []) {
       }
       return cb(null, fullPath);
     },
+    
     filename: (req, file, cb) => {
       const uniqueFileName = nanoid() + "_" + file.originalname;
       file.dest = `uploads/${customPath}/${file.uniqueFolder}/${uniqueFileName}`;

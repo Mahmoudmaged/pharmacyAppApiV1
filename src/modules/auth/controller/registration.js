@@ -19,7 +19,7 @@ export const handelConfirmCode = async ({
   const html = emailTemplate({ body: confirmCode });
 
   if (!(await sendEmail({ to: email, subject, html }))) {
-    return next(new Error("Email rejected", { cause: 400 }));
+    return next(new Error("Email rejected", { cause: {code:400} }));
   }
   //hash confirmCode
   const hashConfirmCode = hash({ plaintext: confirmCode });
@@ -27,41 +27,43 @@ export const handelConfirmCode = async ({
 };
 
 export const preSignup = asyncHandler(async (req, res, next) => {
-  const { email, country } = req.body;
+  const { email, password } = req.body;
   //check email exist
   if (await userModel.findOne({ email: email })) {
-    return next(new Error("Email exist", { cause: 409 }));
+    return next(new Error("Email exist", { cause: { code: 409, customCode: 1000 } }));
   }
   //sendEmail()
   const hashConfirmCode = await handelConfirmCode({ email });
+  //hashPassword
+  const hashPassword = hash({ plaintext: password });
   //create user
   const { _id } = await userModel.create({
     email,
+    password: hashPassword,
     confirmCode: hashConfirmCode,
-    country,
   });
   return res.status(201).json({ message: "Done", _id });
 });
 
 export const completeSignup = asyncHandler(async (req, res, next) => {
-  const { fullName, email, phone, gender, password } = req.body;
+  const { fullName, email, phone, gender, country , chronicDiseases } = req.body;
   //check email exist
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account", { cause: { code: 404, customCode: 1004 } } ));
   }
   if (!user.confirmEmail) {
-    return next(new Error("Please confirm your email first", { cause: 400 }));
+    return next(new Error("Please confirm your email first",  { cause: { code: 404, customCode: 1007 } }  ));
   }
-  //hashPassword
-  const hashPassword = hash({ plaintext: password });
+
   //create user
   const { _id } = await userModel.findOneAndUpdate(
     { email },
     {
       fullName,
-      password: hashPassword,
-      gender,
+      country,
+      chronicDiseases,
+      gender: { AR: gender == 'male' || gender == 'ذكر' ? 'ذكر' : 'انثى', EN: gender == 'male' || gender == 'ذكر' ? 'male' : 'female' },
       phone: { code: phone.split(" ")[0], number: phone.split(" ")[1] },
     }
   );
@@ -147,14 +149,14 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
   const { code, email } = req.body;
   const user = await userModel.findOne({ email: email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account", { cause: { code: 404, customCode: 1004 } }));
   }
   if (user.confirmEmail) {
-    return next(new Error("Already confirmed", { cause: 400 }));
+    return next(new Error("Already confirmed",{ cause: { code: 400, customCode: 1005 } }));
   }
 
   if (!compare({ plaintext: code, hashValue: user.confirmCode })) {
-    return next(new Error("In-valid activation code", { cause: 400 }));
+    return next(new Error("In-valid activation code", { cause: { code: 400, customCode: 1006 } }));
   }
 
   await userModel.updateOne(
@@ -169,22 +171,21 @@ export const requestNewConfirmEmail = asyncHandler(async (req, res, next) => {
 
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account",  { cause: { code: 404, customCode: 1004 } }));
   }
 
   if (user.confirmEmail) {
-    return next(new Error("Already confirmed", { cause: 400 }));
+    return next(new Error("Already confirmed", { cause: { code: 400, customCode: 1005 } }));
   }
 
   //sendEmail()
   const hashConfirmCode = await handelConfirmCode({ email });
-  console.log({ hashConfirmCode });
-  const updated = await userModel.findByIdAndUpdate(
+  await userModel.findByIdAndUpdate(
     user._id,
     { confirmCode: hashConfirmCode },
     { new: true }
   );
-  return res.status(200).json({ message: "Done", updated });
+  return res.status(200).json({ message: "Done" });
 });
 
 export const login = asyncHandler(async (req, res, next) => {
@@ -192,18 +193,18 @@ export const login = asyncHandler(async (req, res, next) => {
   //check email exist
   const user = await userModel.findOne({ email: email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account", { cause: { code: 404, customCode: 1004 } }));
   }
 
   if (!user.confirmEmail) {
-    return next(new Error("Please confirm your email first", { cause: 400 }));
+    return next(new Error("Please confirm your email first", { cause: { code: 400, customCode: 1007 } } ));
   }
   if (!user.status == "blocked") {
-    return next(new Error("blocked account", { cause: 400 }));
+    return next(new Error("blocked account", { cause: { code: 400, customCode: 1008} } ));
   }
 
   if (!compare({ plaintext: password, hashValue: user.password })) {
-    return next(new Error("In-valid login data", { cause: 400 }));
+    return next(new Error("In-valid login data", { cause: { code: 400, customCode: 1009} }));
   }
   const access_token = generateToken({
     payload: { id: user._id, role: user.role, fullName: user.fullName },
@@ -220,11 +221,12 @@ export const login = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "Done", access_token, refresh_token });
 });
 
+
 export const sendForgetCode = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account", { cause: { code: 404, customCode: 1004 } }));
   }
 
   const forgetCode = await handelConfirmCode({
@@ -240,11 +242,11 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
 
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error("Not register account", { cause: 404 }));
+    return next(new Error("Not register account", { cause: {code:404, customCode:1004} }));
   }
 
   if (!compare({ plaintext: forgetCode, hashValue: user.forgetCode })) {
-    return next(new Error("In-valid reset code", { cause: 400 }));
+    return next(new Error("In-valid reset code", { cause: { code: 400, customCode: 1006} }));
   }
 
   user.password = hash({ plaintext: password });
@@ -259,11 +261,11 @@ export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
 
   const decoded = verifyToken({ token });
   if (!decoded?.id) {
-    return next(new Error("In-valid token payload", { cause: 400 }));
+    return next(new Error("In-valid token payload", { cause: {code:400 , customCode:1010} }));
   }
   const user = await userModel.findById(decoded.id);
   if (!user) {
-    return next(new Error("Not register user", { cause: 401 }));
+    return next(new Error("Not register user", { cause: { code: 404, customCode: 1004 } }));
   }
   if (parseInt(user.changePasswordTime?.getTime() / 1000) > decoded.iat) {
     return next(new Error("Expired token", { cause: 400 }));
@@ -284,7 +286,7 @@ export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
 
 // Register admin
 export const registerAdmin = asyncHandler(async (req, res, next) => {
-  const { fullName, email, phone, gender, password } = req.body;
+  const { fullName, email, phone, gender, password,country } = req.body;
 
   //check email exist
   if (await userModel.findOne({ email: email })) {
@@ -305,8 +307,9 @@ export const registerAdmin = asyncHandler(async (req, res, next) => {
     email,
     confirmCode: hashConfirmCode,
     fullName,
+    country,
     password: hashPassword,
-    gender,
+    gender: { AR: gender == 'male' || gender == 'ذكر' ? 'ذكر' : 'انثى', EN: gender == 'male' || gender == 'ذكر' ? 'male' : 'female' },
     phone: { code: phone.split(" ")[0], number: phone.split(" ")[1] },
     role: role._id,
   });

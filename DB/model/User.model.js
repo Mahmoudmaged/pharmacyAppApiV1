@@ -2,20 +2,10 @@ import mongoose, { Schema, Types, model } from "mongoose";
 const userSchema = new Schema(
   {
     fullName: {
-      AR: {
         type: String,
-        required: true,
-        unique: true,
         lowercase: true,
         trim: true,
-      },
-      EN: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true,
-      },
+    
     },
 
     email: {
@@ -26,7 +16,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      // required: [true, 'password is required'],
+      required: [true, 'password is required'],
     },
     phone: {
       type: [Object],
@@ -35,18 +25,19 @@ const userSchema = new Schema(
       AR: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
         trim: true,
         enum: ["ذكر", "انثى"],
+        default:'ذكر'
       },
       EN: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
         trim: true,
         enum: ["male", "female"],
+        default:'male'
+
       },
     },
     DOB: String,
@@ -87,12 +78,17 @@ const userSchema = new Schema(
     provider: {
       type: String,
       default: "SYSTEM",
-      enum: ["SYSTEM", "facebook", "GOOGLE"],
+      enum: ["SYSTEM", "FACEBOOK", "GOOGLE"],
     },
+    country: { type: String, lowercase: true },
     address: {
       country: { type: String, lowercase: true },
       city: { type: String, lowercase: true },
       gov: { type: String, lowercase: true },
+      details:String,
+      mainAddress:Boolean,
+      location:{lat:Number , lang:Number}
+
     },
     height: { type: Number },
     weight: { type: Number },

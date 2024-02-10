@@ -51,7 +51,7 @@ export const validation = (schema, considerHeaders = false) => {
     const validationResult = schema.validate(inputsData, { abortEarly: false });
     if (validationResult.error?.details) {
       return res.status(400).json({
-        message: "Validation Err",
+        errorMessage: "Validation Err",
         validationErr: validationResult.error.details,
       });
     }

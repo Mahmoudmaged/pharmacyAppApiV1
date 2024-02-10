@@ -1,8 +1,8 @@
-import { Schema, Types, model } from "mongoose";
 
+import mongoose, { Schema, Types, model } from "mongoose";
 const variantSchema = new Schema(
   {
-    medicine: { type: Types.ObjectId, ref: "Mdedicine", required: true },
+    medicine: { type: Types.ObjectId, ref: "Medicine", required: true },
     size: { type: String },
     color: { type: String },
     soldItems: { type: Number, default: 0 },
