@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, Types, model } from "mongoose";
 
 export const chronicDiseaseSchema = new Schema(
   {
@@ -18,8 +18,11 @@ export const chronicDiseaseSchema = new Schema(
         trim: true,
       },
     },
+    isDeleted: { type: Boolean, default: false },
+    createdBy: { type: Types.ObjectId, ref: 'User', required: true },
+    updatedBy: { type: Types.ObjectId, ref: 'User' },
   },
-  { timestamps: ture }
+  { timestamps: true }
 );
 
 const ChronicDiseaseModel =

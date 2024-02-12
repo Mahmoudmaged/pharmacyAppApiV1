@@ -65,4 +65,6 @@ export const registerAdmin = joi.object({
     email: generalFields.email,
     password: generalFields.password,
     cPassword: generalFields.cPassword.valid(joi.ref('password')),
+    chronicDiseases:joi.array().items(generalFields.id)
+
 }).required()

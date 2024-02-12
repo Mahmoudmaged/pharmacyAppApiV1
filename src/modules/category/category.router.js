@@ -5,6 +5,7 @@ import {
   diskFileUpload,
   fileUpload,
   fileValidation,
+  folderNames,
 } from "../../utils/multer.js";
 import { Router } from "express";
 import { auth, roles } from "../../middleware/auth.js";
@@ -24,32 +25,40 @@ router.get(
 
 router.post(
   "/",
-  auth("createCategory"),
-  diskFileUpload("category", fileValidation.image).single("image"),
+  auth(endPoint.write),
+  diskFileUpload(folderNames.category, fileValidation.image).single("image"),
   validation(validators.createCategory),
   categoryController.createCategory
 );
 
 router.put(
   "/:categoryId",
-  auth(endPoint.update),
-  fileUpload(fileValidation.image).single("image"),
+  auth(endPoint.write),
+  diskFileUpload(folderNames.category, fileValidation.image).single("image"),
   validation(validators.updateCategory),
   categoryController.updateCategory
 );
 
 router.patch(
   "/:categoryId/addBrand",
-  auth(endPoint.update),
+  auth(endPoint.write),
+
   validation(validators.addBrandItem),
   categoryController.addBrandItem
 );
 
 router.patch(
   "/:categoryId/removeBrand",
-  auth(endPoint.update),
+  auth(endPoint.write),
   validation(validators.addBrandItem),
   categoryController.removeBrandItems
+);
+
+router.patch(
+  "/:categoryId/delete",
+  auth(endPoint.write),
+  validation(validators.checkId),
+  categoryController.deleteCategory
 );
 
 export default router;

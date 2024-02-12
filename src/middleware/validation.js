@@ -40,6 +40,8 @@ export const generalFields = {
 
 export const validation = (schema, considerHeaders = false) => {
   return (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+
     let inputsData = { ...req.body, ...req.query, ...req.params };
     if (req.file || req.files) {
       inputsData.file = req.file || req.files;
@@ -48,10 +50,12 @@ export const validation = (schema, considerHeaders = false) => {
     if (req.headers.authorization && considerHeaders) {
       inputsData = { authorization: req.headers.authorization };
     }
+
     const validationResult = schema.validate(inputsData, { abortEarly: false });
     if (validationResult.error?.details) {
       return res.status(400).json({
-        errorMessage: "Validation Err",
+        errorMessage: lang == "EN" ? "Validation Err" : "خطاء في بيانات المدخله",
+        customCode: 999,
         validationErr: validationResult.error.details,
       });
     }

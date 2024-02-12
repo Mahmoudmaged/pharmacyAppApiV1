@@ -53,7 +53,7 @@ export const createMedicine = asyncHandler(async (req, res, next) => {
 
   if (size || color)
     await Variant.create({
-      medicie: medicine._id,
+      medicine: medicine._id,
       size: size || "",
       color: color || "",
     });

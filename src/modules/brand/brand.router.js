@@ -5,6 +5,7 @@ import {
   diskFileUpload,
   fileUpload,
   fileValidation,
+  folderNames,
 } from "../../utils/multer.js";
 import { Router } from "express";
 import { endPoint } from "./brand.endPoint.js";
@@ -23,18 +24,25 @@ router.get(
 
 router.post(
   "/",
-  auth(),
-  diskFileUpload("brand", fileValidation.image).single("image"),
+  auth(endPoint.write),
+  diskFileUpload(folderNames.brand, fileValidation.image).single("image"),
   validation(validators.createBrand),
   brandController.createBrand
 );
 
 router.put(
   "/:brandId",
-  auth(),
-  diskFileUpload("brand", fileValidation.image).single("image"),
+  auth(endPoint.write),
+  diskFileUpload(folderNames.brand, fileValidation.image).single("image"),
   validation(validators.updateBrand),
   brandController.updateBrand
+);
+
+router.patch(
+  "/:brandId/delete",
+  auth(endPoint.write),
+  validation(validators.checkId),
+  brandController.deleteBrand
 );
 
 export default router;

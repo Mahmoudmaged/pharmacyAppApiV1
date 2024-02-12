@@ -1,4 +1,5 @@
-import { roles } from "../../middleware/auth.js";
+import { roles , privileges } from "../../middleware/auth.js";
 export const endPoint = {
-  create: [roles.Admin],
+  read: privileges.readCategory,
+  write: privileges.writeCategory,
 };

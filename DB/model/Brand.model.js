@@ -8,6 +8,8 @@ const brandSchema = new Schema({
     slug: { type: String, required: true, unique: true, lowercase: true },
 
     image: { type: String, required: true },
+    imageFolderName: { type: String, required: true },
+    isDeleted: { type: Boolean, default: false },
     createdBy: { type: Types.ObjectId, ref: 'User', required: true },
     updatedBy: { type: Types.ObjectId, ref: 'User' },
 }, {

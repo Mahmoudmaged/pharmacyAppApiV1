@@ -11,6 +11,7 @@ import reviewsRouter from "./modules/reviews/reviews.router.js";
 import subcategoryRouter from "./modules/subcategory/subcategory.router.js";
 import userRouter from "./modules/user/user.router.js";
 import privilegeRouter from "./modules/privilege/privilege.router.js";
+import chronicDiseaseRouter from "./modules/chronicDisease/chronicDisease.router.js";
 import medicineRouter from "./modules/medicine/medicine.router.js";
 
 import roleRouter from "./modules/role/role.router.js";
@@ -48,6 +49,7 @@ const bootstrap = (app, express) => {
   app.use(`/user`, userRouter);
   app.use(`/medicine`, medicineRouter);
   app.use(`/privilege`, privilegeRouter);
+  app.use(`/chronicDisease`, chronicDiseaseRouter);
   app.use(`/role`, roleRouter);
   app.use(`/product`, productRouter);
   app.use(`/category`, categoryRouter);

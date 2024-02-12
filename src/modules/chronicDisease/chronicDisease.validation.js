@@ -2,25 +2,22 @@ import joi from 'joi'
 import { generalFields } from '../../middleware/validation.js'
 
 export const checkId = joi.object({
-    brandId: generalFields.id
+    chronicDiseaseId: generalFields.id
 }).required()
 
-export const createBrand = joi.object({
-    name: joi.object({
+export const createChronicDisease= joi.object({
+    disease: joi.object({
         AR: joi.string().pattern(new RegExp(/^[ ؀-ۿـ]{2,25}$/u)).required(),
         EN: joi.string().pattern(new RegExp(/[a-zA-Z]{2,25}$/)).required()
-    }).required(),
-    file: generalFields.file.required()
+    }).required()
 }).required()
 
 
-export const updateBrand = joi.object({
-    imageFolderName:joi.string(),
-    brandId: generalFields.id,
-    name: joi.object({
+export const updateChronicDisease= joi.object({
+    chronicDiseaseId: generalFields.id,
+    disease: joi.object({
         AR: joi.string().pattern(new RegExp(/^[ ؀-ۿـ]{2,25}$/u)),
         EN: joi.string().pattern(new RegExp(/[a-zA-Z]{2,25}$/))
-    }),
-    file: generalFields.file
+    })
 }).required()
 

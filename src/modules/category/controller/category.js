@@ -2,13 +2,20 @@ import slugify from 'slugify';
 import categoryModel from '../../../../DB/model/Category.model.js';
 import { asyncHandler } from '../../../utils/errorHandling.js';
 import brandModel from '../../../../DB/model/Brand.model.js';
+import _ from "underscore";
+import fs from "fs";
+import path from "path";
+import { unlink } from "node:fs/promises";
+import { fileURLToPath } from "url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const getCategoryList = asyncHandler(async (req, res, next) => {
-    const categories = await categoryModel.find().populate([
+    const lang = req.headers.lang || "EN";
+
+    const categories = await categoryModel.find({ isDeleted: false }).populate([
         {
             path: "createdBy"
         },
-
         {
             path: "brandIds"
         },
@@ -16,10 +23,12 @@ export const getCategoryList = asyncHandler(async (req, res, next) => {
             path: "updatedBy"
         },
     ])
-    return res.status(200).json({ message: 'Done', categories })
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", categories })
 })
 
 export const getCategoryById = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+
     const category = await categoryModel.findById(req.params.categoryId).populate([
         {
             path: "createdBy"
@@ -32,11 +41,14 @@ export const getCategoryById = asyncHandler(async (req, res, next) => {
         },
     ])
 
-    return category ? res.status(200).json({ message: 'Done', category }) : next(new Error(`In-valid category Id`, { cause: 400 }))
+    return category ? res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", category }) :
+        next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
+
 })
 
 
 export const createCategory = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
     const { name, description, brandIds } = req.body;
     if (
         await categoryModel.findOne({
@@ -47,7 +59,8 @@ export const createCategory = asyncHandler(async (req, res, next) => {
             ]
         })
     ) {
-        return next(new Error(`Duplicate category name`, { cause: 409 }))
+        return next(new Error(lang == "EN" ? `Duplicate category name` : "يوجد بالفعل فئه تحمل نفس العنوان من قبل", { cause: { code: 409, customCode: 1011 } }))
+
     }
 
 
@@ -55,7 +68,10 @@ export const createCategory = asyncHandler(async (req, res, next) => {
     if (brandIds?.length) {
         for (const [index, id] of brandIds.entries()) {
             if (!await brandModel.findById(id)) {
-                return next(new Error(`In-valid brand`, { cause: 400 }))
+                return next(new Error(
+                    lang == "EN" ?
+                        'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه",
+                    { cause: { code: 404, customCode: 1004 } }));
             }
         }
     }
@@ -64,30 +80,39 @@ export const createCategory = asyncHandler(async (req, res, next) => {
         name,
         slug: slugify(name.EN),
         description,
-        brandIds,
+        brandIds: _.uniq(brandIds),
         image: req.file.dest,
+        imageFolderName: req.imageFolderName,
         createdBy: req.user._id
     })
-    return res.status(201).json({ message: 'Done', category })
+    return res.status(201).json({ message: lang == "EN" ? 'Done' : "تم", category })
 })
 
 export const updateCategory = asyncHandler(async (req, res, next) => {
-
+    const lang = req.headers.lang || "EN";
     const category = await categoryModel.findById(req.params.categoryId)
     if (!category) {
-        return next(new Error(`In-valid category Id`, { cause: 400 }))
+        return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
     }
 
     if (req.body.name) {
         if (req.body?.name?.AR) {
             if (category.name.AR == req.body.name.AR.toLowerCase()) {
-                return next(new Error(`Sorry cannot update category with the old AR name:${req.body.name.AR}`, { cause: 400 }))
+                return next(new Error(
+                    lang == "EN" ?
+                        `Sorry cannot update category with the old AR name:${req.body.name.AR}` :
+                        `${req.body.name.AR}عفو لا يمكن تحديث بنفس الاسم العربي `,
+                    { cause: { code: 409, customCode: 1011 } }))
             }
         }
 
         if (req.body?.name?.EN) {
             if (category.name.EN == req.body.name.EN.toLowerCase()) {
-                return next(new Error(`Sorry  cannot update category with the old EN name:${req.body.name.EN}`, { cause: 400 }))
+                return next(new Error(
+                    lang == "EN" ?
+                        `Sorry  cannot update category with the old EN name:${req.body.name.EN}` :
+                        `${req.body.name.EN}عفو لا يمكن تحديث بنفس الاسم الانجليزي `,
+                    { cause: { code: 409, customCode: 1011 } }))
             }
 
             category.slug = slugify(req.body.name.EN);
@@ -100,7 +125,8 @@ export const updateCategory = asyncHandler(async (req, res, next) => {
                 { "name.AR": req.body.name.AR },
             ]
         })) {
-            return next(new Error(`Duplicate category name`, { cause: 409 }))
+
+            return next(new Error(lang == "EN" ? `Duplicate category name` : "يوجد بالفعل فئه تحمل نفس العنوان من قبل", { cause: { code: 409, customCode: 1011 } }))
         }
 
         category.name = {
@@ -117,14 +143,20 @@ export const updateCategory = asyncHandler(async (req, res, next) => {
     if (req.body.brandIds?.length) {
         for (const [index, id] of req.body.brandIds.entries()) {
             if (!await brandModel.findById(id)) {
-                return next(new Error(`In-valid brand`, { cause: 400 }))
+                return next(new Error(lang == "EN" ? 'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
             }
         }
     }
-    category.brandIds = req.body?.brandIds?.length ? req.body.brandIds : category.brandIds;
+    category.brandIds = req.body?.brandIds?.length ? _.uniq(req.body.brandIds) : category.brandIds;
 
 
     if (req.file) {
+        if (category.image) {
+            const fullPath = path.join(__dirname, `./../../../${category.image}`)
+            if (fs.existsSync(fullPath)) {
+                await unlink(fullPath);
+            }
+        }
         category.image = req.file.dest
     }
 
@@ -132,38 +164,49 @@ export const updateCategory = asyncHandler(async (req, res, next) => {
     category.updatedBy = req.user._id
     await category.save()
 
-    return res.status(200).json({ message: 'Done', category })
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", category })
 })
 
 export const addBrandItem = asyncHandler(async (req, res, next) => {
 
-
+    const lang = req.headers.lang || "EN";
     const { brandIds } = req.body
     const category = await categoryModel.findOneAndUpdate(req.params.categoryId)
     if (!category) {
-        return next(new Error(`In-valid category Id`, { cause: 400 }))
+        return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
     }
 
     if (brandIds?.length) {
         for (const [index, id] of brandIds.entries()) {
             if (!await brandModel.findById(id)) {
-                return next(new Error(`In-valid brand`, { cause: 400 }))
+                return next(new Error(lang == "EN" ? 'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
             }
         }
     }
 
     const updatedCategory = await categoryModel.findOneAndUpdate({ _id: category._id }, { $addToSet: { brandIds: brandIds } }, { new: true })
 
-    return res.status(200).json({ message: 'Done', category: updatedCategory })
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", category: updatedCategory })
 })
 
 export const removeBrandItems = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
 
     const { categoryId } = req.params;
     const { brandIds } = req.body
     const category = await categoryModel.findOneAndUpdate({ _id: categoryId }, { $pull: { brandIds: { $in: brandIds } } }, { new: true })
     if (!category) {
-        return next(new Error(`In-valid category Id`, { cause: 400 }))
+        return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
     }
     return res.status(200).json({ message: 'Done', category })
+})
+
+export const deleteCategory = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+    const { categoryId } = req.params;
+    const category = await categoryModel.findOneAndUpdate({ _id: categoryId }, { isDeleted: true, updatedBy: req.user._id }, { new: true })
+    if (!category) {
+        return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
+    }
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", category })
 })

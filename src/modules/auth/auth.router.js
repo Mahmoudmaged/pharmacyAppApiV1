@@ -3,11 +3,13 @@ import { Router } from "express";
 import { validation } from '../../middleware/validation.js';
 import * as validators from './auth.validation.js'
 import { auth } from '../../middleware/auth.js';
+import { endPoint } from './auth.endPoint.js';
 const router = Router()
 
 
 router.post('/pre/signup', validation(validators.preSignup), authController.preSignup)
 router.post('/signup', validation(validators.signup), authController.completeSignup)
+
 router.post('/loginWithGmail', authController.loginWithGmail)
 
 router.post('/confirmEmail', validation(validators.confirmEmail), authController.confirmEmail)
@@ -30,6 +32,9 @@ router.post("/newToken",
 
 
 
-router.post('/registerAdmin', auth('createAdmin'), validation(validators.registerAdmin), authController.registerAdmin)
+router.post('/registerAdmin',
+    auth(endPoint.writeAdmin),
+    validation(validators.registerAdmin),
+    authController.registerAdmin)
 
 export default router

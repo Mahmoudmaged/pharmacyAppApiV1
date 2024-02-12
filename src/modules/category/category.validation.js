@@ -20,6 +20,7 @@ export const createCategory = joi.object({
 
 
 export const updateCategory = joi.object({
+    imageFolderName:joi.string(),
     categoryId: generalFields.id,
     name: joi.object({
         AR: joi.string().pattern(new RegExp(/^[ ؀-ۿـ]{2,25}$/u)),

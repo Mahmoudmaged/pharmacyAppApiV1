@@ -7,15 +7,15 @@ import { auth } from '../../middleware/auth.js';
 const router = Router()
 
 //get
-router.get("/", auth(), roleController.getAll)
-router.get("/:roleId", auth(), validation(validators.checkID), roleController.getById)
+router.get("/", auth(endPoint.read), roleController.getAll)
+router.get("/:roleId", auth(endPoint.read), validation(validators.checkID), roleController.getById)
 //create
-router.post("/", auth(), validation(validators.createRole), roleController.createRole)
-router.put("/:roleId/add", auth(), validation(validators.addRoleItem), roleController.addRoleItem)
+router.post("/", auth(endPoint.write), validation(validators.createRole), roleController.createRole)
+router.put("/:roleId/add", auth(endPoint.write), validation(validators.addRoleItem), roleController.addRoleItem)
 //update
-router.put("/:roleId", auth(), validation(validators.updateRole), roleController.updateRole)
+router.put("/:roleId", auth(endPoint.write), validation(validators.updateRole), roleController.updateRole)
 //delete
-router.delete("/:roleId/privilege/:privilegeId", auth(), validation(validators.deleteRoleItem), roleController.deleteRoleItem)
-router.delete("/:roleId", auth(), validation(validators.checkID), roleController.deleteRole)
+router.patch("/:roleId/privilege/:privilegeId", auth(endPoint.write), validation(validators.deleteRoleItem), roleController.deleteRoleItem)
+router.patch("/:roleId", auth(endPoint.write), validation(validators.checkID), roleController.deleteRole)
 
 export default router

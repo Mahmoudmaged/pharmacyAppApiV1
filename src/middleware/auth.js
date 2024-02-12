@@ -8,19 +8,38 @@ export const roles = {
   User: "User",
   HR: "HR",
 };
+
+export const privileges = {
+  writeBrand: 'writeBrand',
+  readBrand: 'readBrand',
+
+  writeCategory: 'writeCategory',
+  readCategory: 'readCategory',
+
+  writeRole: 'writeRole',
+  readRole: 'readRole',
+
+  writeAdmin: "writeAdmin",
+  readAdmin: "readAdmin",
+
+  readChronicDisease:"readChronicDisease",
+  writeChronicDisease:"writeChronicDisease"
+
+}
 export const auth = (accessRole = "") => {
   return asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
     const { authorization } = req.headers;
     if (!authorization?.startsWith(process.env.BEARER_KEY)) {
-      return next(new Error("In-valid Bearer Key", { cause: 400 }));
+      return next(new Error(lang == "EN" ? "In-valid Bearer Key" : "خطاء بكلمه تعريف الارتباط", { cause: { code: 400, customCode: 1013 } }));
     }
     const token = authorization.split(process.env.BEARER_KEY)[1];
     if (!token) {
-      return next(new Error("In-valid token", { cause: 400 }));
+      return next(new Error(lang == "EN" ? "In-valid token" : "خطاء في  شهاده التحقق", { cause: { code: 400, customCode: 1010 } }));
     }
     const decoded = verifyToken({ token });
     if (!decoded?.id) {
-      return next(new Error("In-valid token payload", { cause: 400 }));
+      return next(new Error(lang == "EN" ? "In-valid token payload" : "خطاء في محتوي شهاده التحقق", { cause: { code: 400, customCode: 1010 } }));
     }
     const user = await userModel
       .findById(decoded.id)
@@ -36,20 +55,22 @@ export const auth = (accessRole = "") => {
       ]);
 
     if (!user) {
-      return next(new Error("Not register user", { cause: 401 }));
+      return next(new Error(lang == "EN" ? "Not register user" : "لم يتم العثور علي حساب المستخدم", { cause: { code: 404, customCode: 1004 } }));
     }
     if (parseInt(user.changePasswordTime?.getTime() / 1000) > decoded.iat) {
-      return next(new Error("Expired token", { cause: 400 }));
+    return next(new Error(lang == "EN" ? "Expired token" : "عفوا لقد قمت باستخدام جمله ارتباط منتهيه الصلاحيه برجاء تسجيل الدخول مجددا", { cause: { code: 400, customCode: 1012 } }));
+
     }
 
-    // if (!user.role?.privileges) {
-    //     return next(new Error("no access roles", { cause: 400 }))
-    // }
+    if (!user.role?.privileges) {
+      return next(new Error(lang=="EN"?"no access roles":"عفو لا تمتلك الصلاحيه", { cause: {code:403 , customCode:1003} }))
+    }
 
     // let userPrivies = user.role?.privileges?.map(ele => ele.title)
-    // console.log({userPrivies});
+    // console.log({ userPrivies, accessRole });
     // if (!userPrivies.includes(accessRole.toLowerCase())) {
-    //     return next(new Error("Not authorized user", { cause: 403 }))
+    //   return next(new Error(lang=="EN"?"Not authorized user":"عفو لا تمتلك الصلاحيه", { cause: {code:403 , customCode:1003} }))
+
     // }
 
     req.user = user;

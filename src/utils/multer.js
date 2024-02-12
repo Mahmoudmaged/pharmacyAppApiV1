@@ -5,6 +5,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+export const folderNames = {
+  brand: "brand",
+  category: 'category',
+}
 export const fileValidation = {
   image: ["image/jpeg", "image/png", "image/gif"],
   file: ["application/pdf", "application/msword"],
@@ -13,30 +17,47 @@ export const fileValidation = {
 export function diskFileUpload(customPath = "general", customValidation = []) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
+
+
+
       let fullPath = path.join(__dirname, `../uploads/${customPath}`);
-      if (customPath == "medicine") {
-        const medicineFolder = nanoid();
-        req.medicineFolder = medicineFolder;
-        file.uniqueFolder = medicineFolder;
-        fullPath = `${fullPath}/${medicineFolder}`;
+
+
+      if (!req.query?.imageFolderName) {
+        req.imageFolderName = nanoid();
+      } else {
+        req.imageFolderName = req.query.imageFolderName;
       }
-      if (customPath == "user") {
-        const userId = req.user.id;
-        fullPath = `${fullPath}/${userId}`;
-        file.uniqueFolder = userId;
-      }
+
+      file.uniqueFolder = req.imageFolderName;
+      fullPath = `${fullPath}/${req.imageFolderName}`;
+
+      // if (customPath != "medicine") {
+      //   const medicineFolder = nanoid();
+      //   req.medicineFolder = medicineFolder;
+      //   file.uniqueFolder = medicineFolder;
+      //   fullPath = `${fullPath}/${medicineFolder}`;
+      // }
+
+      // if (customPath == "user") {
+      //   const userId = req.user.id;
+      //   fullPath = `${fullPath}/${userId}`;
+      //   file.uniqueFolder = userId;
+      // }
+
       if (!fs.existsSync(fullPath)) {
         fs.mkdirSync(fullPath, { recursive: true });
       }
       return cb(null, fullPath);
     },
-    
+
     filename: (req, file, cb) => {
       const uniqueFileName = nanoid() + "_" + file.originalname;
       file.dest = `uploads/${customPath}/${file.uniqueFolder}/${uniqueFileName}`;
       cb(null, uniqueFileName);
     },
   });
+
   function fileFilter(req, file, cb) {
     if (customValidation.includes(file.mimetype)) {
       cb(null, true);

@@ -7,7 +7,6 @@ const userSchema = new Schema(
         trim: true,
     
     },
-
     email: {
       type: String,
       unique: [true, "email must be unique value"],
@@ -45,7 +44,7 @@ const userSchema = new Schema(
       type: Types.ObjectId,
       ref: "Role",
       required: true,
-      default: "65b6a78413524f005feca52a",
+      default: "65c8a05679edf7c95768f418",
     },
     status: {
       type: String,
