@@ -1,8 +1,6 @@
-// endpoints privilages
-// TODO
-export default {
-  create: "",
-  update: "",
-  delete: "",
-  read: "",
+import { privileges } from '../../middleware/auth.js'
+export const endPoint = {
+
+  read: privileges.readMedicine,
+  write: privileges.writeMedicine
 };

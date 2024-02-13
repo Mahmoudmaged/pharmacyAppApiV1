@@ -9,7 +9,8 @@ const privilegeSchema = new Schema({
             "System",
             'Category',
             "Brand",
-            "ChronicDisease"
+            "ChronicDisease",
+            "Medicine"
         ]
     },
     // actions: [{

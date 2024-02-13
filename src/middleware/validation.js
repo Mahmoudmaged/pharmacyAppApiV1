@@ -51,6 +51,7 @@ export const validation = (schema, considerHeaders = false) => {
       inputsData = { authorization: req.headers.authorization };
     }
 
+    console.log({ inputsData });
     const validationResult = schema.validate(inputsData, { abortEarly: false });
     if (validationResult.error?.details) {
       return res.status(400).json({

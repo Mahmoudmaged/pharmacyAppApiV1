@@ -24,23 +24,40 @@ const medicineSchema = new Schema(
     mainPrice: { type: Number, required: true },
     discountPercent: { type: Number, min: 0, max: 100 },
     salePrice: { type: Number },
-    isDrug: { type: Boolean, required: true },
+    isDrug: { type: Boolean, default: false, required: true },
     soldQuantity: { type: Number, default: 0 },
-    images: [{ type: String, required: true }],
+    images: [{ type: String }],
     imageFolderName: { type: String, required: true, unique: true },
     brand: { type: Types.ObjectId, ref: "Brand" },
     category: { type: Types.ObjectId, ref: "Category" },
-    sideEffects: [{ type: String, required: true }],
-    indicationsForUse: { type: Object }, // TODO
-    dose: { type: Object }, // TODO
+    sideEffects: [{
+      AR: { type: String, required: true },
+      EN: { type: String, required: true }
+    }],
+    indicationsForUse: [{
+      AR: { type: String },
+      EN: { type: String }
+    }], // TODO
+    dose: [{
+      startAge: Number,
+      endAge: Number,
+      dose: {
+        AR: { type: String },
+        EN: { type: String }
+      }
+    }], // TODO
     createdBy: { type: Types.ObjectId, ref: "User", required: true },
-    updatedBy: [
-      {
-        id: { type: Types.ObjectId, ref: "User" },
-        date: { type: Date },
-        _id: false,
-      },
-    ],
+    updatedBy: { type: Types.ObjectId, ref: "User" },
+    // updatedBy: [
+    //   {
+    //     id: { type: Types.ObjectId, ref: "User" },
+    //     date: { type: Date },
+    //     _id: false,
+    //   },
+    // ],
+
+    isDeleted: { type: Boolean, default: false },
+
   },
   {
     toJSON: { virtuals: true },

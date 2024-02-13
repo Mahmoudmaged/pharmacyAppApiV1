@@ -23,7 +23,10 @@ export const privileges = {
   readAdmin: "readAdmin",
 
   readChronicDisease:"readChronicDisease",
-  writeChronicDisease:"writeChronicDisease"
+  writeChronicDisease:"writeChronicDisease",
+
+  readMedicine:"readMedicine",
+  writeMedicine:"writeMedicine"
 
 }
 export const auth = (accessRole = "") => {
@@ -66,12 +69,12 @@ export const auth = (accessRole = "") => {
       return next(new Error(lang=="EN"?"no access roles":"عفو لا تمتلك الصلاحيه", { cause: {code:403 , customCode:1003} }))
     }
 
-    // let userPrivies = user.role?.privileges?.map(ele => ele.title)
-    // console.log({ userPrivies, accessRole });
-    // if (!userPrivies.includes(accessRole.toLowerCase())) {
-    //   return next(new Error(lang=="EN"?"Not authorized user":"عفو لا تمتلك الصلاحيه", { cause: {code:403 , customCode:1003} }))
+    let userPrivies = user.role?.privileges?.map(ele => ele.title)
+    console.log({ userPrivies, accessRole });
+    if (!userPrivies.includes(accessRole.toLowerCase())) {
+      return next(new Error(lang=="EN"?"Not authorized user":"عفو لا تمتلك الصلاحيه", { cause: {code:403 , customCode:1003} }))
 
-    // }
+    }
 
     req.user = user;
     return next();

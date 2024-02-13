@@ -6,6 +6,9 @@ const variantSchema = new Schema(
     size: { type: String },
     color: { type: String },
     soldItems: { type: Number, default: 0 },
+    createdBy: { type: Types.ObjectId, ref: "User", required: true },
+    updatedBy: { type: Types.ObjectId, ref: "User" },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
