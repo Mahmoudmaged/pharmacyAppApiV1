@@ -3,20 +3,20 @@ import * as privilegeController from './controller/privilege.js'
 import * as validators from './privilege.validation.js'
 import { validation } from '../../middleware/validation.js';
 import { Router } from "express";
-import { endPoint } from './privilege.endPoint.js';
-import { auth } from '../../middleware/auth.js';
+import { authentication, authorization } from "../../middleware/auth.js";
+
 const router = Router()
 
 
 //create
-router.post("/", auth(), validation(validators.createPrivilege), privilegeController.createPrivilege)
+router.post("/", authentication(), validation(validators.createPrivilege), privilegeController.createPrivilege)
 //update
-router.put("/:id", auth(), validation(validators.updatePrivilege), privilegeController.updatePrivilege)
+router.put("/:id", authentication(), validation(validators.updatePrivilege), privilegeController.updatePrivilege)
 //delete
-router.delete("/:id/", auth(), validation(validators.deletePrivilege), privilegeController.deletePrivilege)
+router.delete("/:id/", authentication(), validation(validators.deletePrivilege), privilegeController.deletePrivilege)
 //get
-router.get("/", auth(), privilegeController.getAll)
-router.get("/:id", auth(), validation(validators.deletePrivilege), privilegeController.getById)
+router.get("/", authentication(), privilegeController.getAll)
+router.get("/:id", authentication(), validation(validators.deletePrivilege), privilegeController.getById)
 
 
 

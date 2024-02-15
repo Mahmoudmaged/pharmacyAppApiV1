@@ -3,7 +3,8 @@ import * as validators from "./chronicDisease.validation.js";
 import { validation } from "../../middleware/validation.js";
 import { Router } from "express";
 import { endPoint } from "./chronicDisease.endPoint.js";
-import { auth } from "../../middleware/auth.js";
+import { authentication, authorization } from "../../middleware/auth.js";
+
 const router = Router();
 
 
@@ -16,21 +17,24 @@ router.get(
 
 router.post(
   "/",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.createChronicDisease),
   chronicDiseaseController.createChronicDisease
 );
 
 router.put(
   "/:chronicDiseaseId",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.updateChronicDisease),
   chronicDiseaseController.updateChronicDisease
 );
 
 router.patch(
   "/:chronicDiseaseId/delete",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.checkId),
   chronicDiseaseController.deleteChronicDisease
 );

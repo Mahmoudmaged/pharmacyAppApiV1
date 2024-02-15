@@ -6,19 +6,18 @@ import cartRouter from "./modules/cart/cart.router.js";
 import categoryRouter from "./modules/category/category.router.js";
 import couponRouter from "./modules/coupon/coupon.router.js";
 import orderRouter from "./modules/order/order.router.js";
-import productRouter from "./modules/product/product.router.js";
 import reviewsRouter from "./modules/reviews/reviews.router.js";
-import subcategoryRouter from "./modules/subcategory/subcategory.router.js";
 import userRouter from "./modules/user/user.router.js";
 import privilegeRouter from "./modules/privilege/privilege.router.js";
 import chronicDiseaseRouter from "./modules/chronicDisease/chronicDisease.router.js";
 import medicineRouter from "./modules/medicine/medicine.router.js";
-
+import wishlistRouter from './modules/wishlist/wishlist.router.js'
 import roleRouter from "./modules/role/role.router.js";
 import chatRouter from "./modules/chat/chat.router.js";
+import adminRouter from "./modules/admin/admin.router.js";
+import pharmacyRouter from './modules/pharmacy/pharmacy.router.js'
 import { globalErrorHandling } from "./utils/errorHandling.js";
 import cors from "cors";
-import { productSchema } from "./modules/product/GraphQl/schema.js";
 
 const bootstrap = (app, express) => {
   app.use(cors()); // allow access from anywhere
@@ -47,19 +46,20 @@ const bootstrap = (app, express) => {
   });
   app.use(`/auth`, authRouter);
   app.use(`/user`, userRouter);
+  app.use(`/admin`, adminRouter);
   app.use(`/medicine`, medicineRouter);
+  app.use(`/pharmacy`, pharmacyRouter);
   app.use(`/privilege`, privilegeRouter);
   app.use(`/chronicDisease`, chronicDiseaseRouter);
   app.use(`/role`, roleRouter);
-  app.use(`/product`, productRouter);
   app.use(`/category`, categoryRouter);
-  app.use(`/subCategory`, subcategoryRouter);
   app.use(`/reviews`, reviewsRouter);
   app.use(`/coupon`, couponRouter);
   app.use(`/cart`, cartRouter);
   app.use(`/order`, orderRouter);
   app.use(`/brand`, branRouter);
   app.use(`/chat`, chatRouter);
+  app.use(`/wishlist`, wishlistRouter);
 
   app.all("*", (req, res, next) => {
     res.status(404).send("In-valid Routing Plz check url or method");

@@ -8,7 +8,7 @@ import {
   folderNames,
 } from "../../utils/multer.js";
 import { Router } from "express";
-import { auth, roles } from "../../middleware/auth.js";
+import { authentication, authorization } from "../../middleware/auth.js";
 import { endPoint } from "./category.endPoint.js";
 import medicineRouter from "./../medicine/medicine.router.js";
 const router = Router({});
@@ -25,7 +25,8 @@ router.get(
 
 router.post(
   "/",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   diskFileUpload(folderNames.category, fileValidation.image).single("image"),
   validation(validators.createCategory),
   categoryController.createCategory
@@ -33,7 +34,8 @@ router.post(
 
 router.put(
   "/:categoryId",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   diskFileUpload(folderNames.category, fileValidation.image).single("image"),
   validation(validators.updateCategory),
   categoryController.updateCategory
@@ -41,22 +43,24 @@ router.put(
 
 router.patch(
   "/:categoryId/addBrand",
-  auth(endPoint.write),
-
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.addBrandItem),
   categoryController.addBrandItem
 );
 
 router.patch(
   "/:categoryId/removeBrand",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.addBrandItem),
   categoryController.removeBrandItems
 );
 
 router.patch(
   "/:categoryId/delete",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.checkId),
   categoryController.deleteCategory
 );

@@ -161,6 +161,7 @@ export const loginWithGmail = asyncHandler(async (req, res, next) => {
   return res.status(201).json({ message: "Done", access_token, refresh_token });
 });
 
+
 export const confirmEmail = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
   const { code, email } = req.body;
@@ -310,7 +311,7 @@ export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
 // Register admin
 export const registerAdmin = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
-  const { fullName, email, phone, gender, password, country , chronicDiseases} = req.body;
+  const { fullName, email, phone, gender, password, country, chronicDiseases } = req.body;
   //check email exist
   if (await userModel.findOne({ email: email })) {
     return next(new Error(lang == "EN" ? "Email exist" : "عفوا يوجد حساب مسجل يحمل هذا البريد الالكتروني  بالفعل", { cause: { code: 409, customCode: 1011 } }));

@@ -9,7 +9,8 @@ import {
 } from "../../utils/multer.js";
 import { Router } from "express";
 import { endPoint } from "./brand.endPoint.js";
-import { auth } from "../../middleware/auth.js";
+import { authentication, authorization } from '../../middleware/auth.js';
+
 import medicineRouter from "./../medicine/medicine.router.js";
 const router = Router();
 
@@ -24,7 +25,8 @@ router.get(
 
 router.post(
   "/",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   diskFileUpload(folderNames.brand, fileValidation.image).single("image"),
   validation(validators.createBrand),
   brandController.createBrand
@@ -32,7 +34,8 @@ router.post(
 
 router.put(
   "/:brandId",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   diskFileUpload(folderNames.brand, fileValidation.image).single("image"),
   validation(validators.updateBrand),
   brandController.updateBrand
@@ -40,7 +43,8 @@ router.put(
 
 router.patch(
   "/:brandId/delete",
-  auth(endPoint.write),
+  authentication(),
+  authorization(endPoint.write),
   validation(validators.checkId),
   brandController.deleteBrand
 );

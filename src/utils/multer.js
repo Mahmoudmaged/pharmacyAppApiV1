@@ -6,9 +6,10 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const folderNames = {
-  medicine:"medicine",
+  medicine: "medicine",
   brand: "brand",
   category: 'category',
+  pharmacy: "pharmacy"
 }
 export const fileValidation = {
   image: ["image/jpeg", "image/png", "image/gif"],
