@@ -150,7 +150,6 @@ export const approvePharmacy = asyncHandler(async (req, res, next) => {
     }
     // request approve
 
-    console.log({ xx: req.user._id });
     request.approved = true
     request.approvedBy = req.user._id
     request.updatedBy = req.user._id

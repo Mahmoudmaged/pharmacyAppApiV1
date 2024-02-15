@@ -21,33 +21,38 @@ router.post('/branch/signup',
 );
 
 router.put('/:pharmacyId/certificates',
+    authentication(),
     diskFileUpload(folderNames.pharmacy, fileValidation.file).fields([
         { name: "license", maxCount: 1, },
         { name: "commercialRegister", maxCount: 1 },
         { name: "taxCard", maxCount: 1 },
     ]),
-    authentication(),
+    validation(validators.certificates),
     pharmacyController.uploadPharmacyFiles
 );
 
 router.patch('/:pharmacyId/image',
-    diskFileUpload(folderNames.pharmacy, fileValidation.image).single("image"),
     authentication(),
+    diskFileUpload(folderNames.pharmacy, fileValidation.image).single("image"),
+    validation(validators.image),
     pharmacyController.pharmacyImage
 );
 
 router.patch('/:pharmacyId/employee/:employeeId/hire',
+    validation(validators.hireEmployee),
     authentication(),
     pharmacyController.hireEmployee
 );
 
 router.patch('/:pharmacyId/employee/:employeeId/fire',
+    validation(validators.hireEmployee),
     authentication(),
     pharmacyController.fireEmployee
 );
 
 
 router.put('/:pharmacyId/request/approve',
+    validation(validators.approvePharmacy),
     authentication(),
     authorization(endPoint.approvePharmacy),
     pharmacyController.approvePharmacy

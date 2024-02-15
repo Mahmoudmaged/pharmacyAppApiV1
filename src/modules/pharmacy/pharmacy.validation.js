@@ -27,6 +27,29 @@ export const signup = joi.object({
     }).required()
 }).required()
 
+export const certificates = joi.object({
+    imageFolderName: joi.string().required(),
+    pharmacyId: generalFields.id,
+    file: joi.object({
+        license: generalFields.file,
+        commercialRegister: generalFields.file,
+        taxCard: generalFields.file
+    })
+}).required()
+export const image = joi.object({
+    pharmacyId: generalFields.id,
+    imageFolderName: joi.string().required(),
+    file: generalFields.file.required()
+}).required()
+
+export const hireEmployee = joi.object({
+    pharmacyId: generalFields.id,
+    employeeId: generalFields.id
+}).required()
+
+export const approvePharmacy = joi.object({
+    pharmacyId: generalFields.id
+}).required()
 
 export const confirmEmail = joi.object({
     code: joi.string().pattern(new RegExp(/^[0-9]{4}$/)).required(),
