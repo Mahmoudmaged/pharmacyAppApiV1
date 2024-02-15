@@ -11,8 +11,8 @@ const chatSchema = new Schema({
     }],
     chatType: {
         type: String,
-        default:"ovo",
-        enum:['ovo' , 'ovm']
+        default: "ovo",
+        enum: ['ovo', 'ovm']
     }
 }, {
     timestamps: true
