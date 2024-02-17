@@ -1,9 +1,6 @@
-import { roles } from "../../middleware/auth.js";
-
+import { privileges } from "../../middleware/auth.js";
 
 export const endPoint = {
-    create :[roles.Admin],
-    update :[roles.Admin],
-    delete :[roles.Admin],
-
-}
+  write: privileges.writeCoupon,
+  read: privileges.readCoupon,
+};

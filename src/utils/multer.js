@@ -8,9 +8,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const folderNames = {
   medicine: "medicine",
   brand: "brand",
-  category: 'category',
-  pharmacy: "pharmacy"
-}
+  category: "category",
+  pharmacy: "pharmacy",
+  coupon: "coupon",
+};
 export const fileValidation = {
   image: ["image/jpeg", "image/png", "image/gif"],
   file: ["application/pdf", "application/msword"],
@@ -19,11 +20,7 @@ export const fileValidation = {
 export function diskFileUpload(customPath = "general", customValidation = []) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-
-
-
       let fullPath = path.join(__dirname, `../uploads/${customPath}`);
-
 
       if (!req.query?.imageFolderName) {
         req.imageFolderName = nanoid();

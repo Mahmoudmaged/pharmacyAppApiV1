@@ -2,11 +2,15 @@ import { Router } from "express";
 import { authentication, authorization } from "../../middleware/auth.js";
 
 import { endPoint } from "./medicine.endPoint.js";
-import { diskFileUpload, fileValidation, folderNames } from "../../utils/multer.js";
+import {
+  diskFileUpload,
+  fileValidation,
+  folderNames,
+} from "../../utils/multer.js";
 import * as medicineController from "./controller/medicine.js";
 import * as validators from "./medicine.validation.js";
 import { validation } from "../../middleware/validation.js";
-import wishlistRouter from '../wishlist/wishlist.router.js'
+import wishlistRouter from "../wishlist/wishlist.router.js";
 const router = Router({ mergeParams: true });
 router.use("/:medicineId/wishlist", wishlistRouter);
 // add medicine
@@ -35,13 +39,14 @@ router.patch(
   medicineController.updateMedicineVariant
 );
 
-// freeze/unfreeze medicine variant 
+// freeze/unfreeze medicine variant
 router.patch(
   "/:medicineId/variant/:variantId/freeze",
   authentication(),
   authorization(endPoint.write),
   validation(validators.deleteMedicineVariant),
-  medicineController.freezeMedicineVariant);
+  medicineController.freezeMedicineVariant
+);
 
 router.patch(
   "/:medicineId/variant/:variantId/unfreeze",
@@ -50,8 +55,6 @@ router.patch(
   validation(validators.deleteMedicineVariant),
   medicineController.unFreezeMedicineVariant
 );
-
-
 
 // delete medicine image
 router.patch(
@@ -88,14 +91,12 @@ router.patch(
   medicineController.unFreezeMedicine
 );
 
-
 // get all medicines || of category || of brand
 router.get(
   "/",
   validation(validators.getMedicines),
   medicineController.getMedicines
 );
-
 
 // search medicine
 router.get(
