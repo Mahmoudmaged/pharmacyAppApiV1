@@ -1,36 +1,37 @@
 import mongoose, { model, Schema, Types } from "mongoose";
 
-const privilegeSchema = new Schema({
+const privilegeSchema = new Schema(
+  {
     title: { type: String, required: true, unique: true, lowercase: true },
     label: {
-        type: String,
-        required: true, default: "System",
-        enum: [
-            "System",
-            'Category',
-            "Brand",
-            "ChronicDisease",
-            "Medicine"
-        ]
+      type: String,
+      required: true,
+      default: "System",
+      enum: [
+        "System",
+        "Category",
+        "Brand",
+        "ChronicDisease",
+        "Medicine",
+        "Coupon",
+      ],
     },
     // actions: [{
     //     title: { type: String, required: true, unique: true},
     // }],
-    createdBy: { type: Types.ObjectId, ref: 'User', required: true },
-    updatedBy: { type: Types.ObjectId, ref: 'User' },
-}, {
-
+    createdBy: { type: Types.ObjectId, ref: "User", required: true },
+    updatedBy: { type: Types.ObjectId, ref: "User" },
+  },
+  {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
-    timestamps: true
-})
+    timestamps: true,
+  }
+);
 
-
-const privilegeModel = mongoose.models.Privilege || model('Privilege', privilegeSchema)
-export default privilegeModel
-
-
-
+const privilegeModel =
+  mongoose.models.Privilege || model("Privilege", privilegeSchema);
+export default privilegeModel;
 
 // privilegeSchema.post('find', function (result) {
 //     console.log(result);

@@ -10,6 +10,7 @@ export const roles = {
   HR: "HR",
 };
 
+// TODO >>>> read from the database
 export const privileges = {
   writeBrand: "writeBrand",
   readBrand: "readBrand",
