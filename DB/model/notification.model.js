@@ -6,6 +6,17 @@ const notificationSchema = new Schema(
     receiver: { type: Types.ObjectId, required: true },
     content: String,
     seen: boolean,
+    type: {
+      type: String,
+      enum: [
+        "UserToSystem",
+        "SystemToUser",
+        "PharmacyToSystem",
+        "SystemToPharmacy",
+        "PharmacyToClient",
+        "ClientToPharmacy",
+      ],
+    },
   },
   { timestamps: true }
 );
