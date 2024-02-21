@@ -11,6 +11,7 @@ export const folderNames = {
   category: "category",
   pharmacy: "pharmacy",
   coupon: "coupon",
+  user: "user",
 };
 export const fileValidation = {
   image: ["image/jpeg", "image/png", "image/gif"],
@@ -23,25 +24,26 @@ export function diskFileUpload(customPath = "general", customValidation = []) {
       let fullPath = path.join(__dirname, `../uploads/${customPath}`);
 
       if (!req.query?.imageFolderName) {
-        req.imageFolderName = nanoid();
+        if (customPath == folderNames.user) {
+          const userId = req.user.id;
+          fullPath = `${fullPath}/${userId}`;
+          file.uniqueFolder = userId;
+        } else {
+          req.imageFolderName = nanoid();
+          file.uniqueFolder = req.imageFolderName;
+          fullPath = `${fullPath}/${req.imageFolderName}`;
+        }
       } else {
         req.imageFolderName = req.query.imageFolderName;
+        file.uniqueFolder = req.imageFolderName;
+        fullPath = `${fullPath}/${req.imageFolderName}`;
       }
-
-      file.uniqueFolder = req.imageFolderName;
-      fullPath = `${fullPath}/${req.imageFolderName}`;
 
       // if (customPath != "medicine") {
       //   const medicineFolder = nanoid();
       //   req.medicineFolder = medicineFolder;
       //   file.uniqueFolder = medicineFolder;
       //   fullPath = `${fullPath}/${medicineFolder}`;
-      // }
-
-      // if (customPath == "user") {
-      //   const userId = req.user.id;
-      //   fullPath = `${fullPath}/${userId}`;
-      //   file.uniqueFolder = userId;
       // }
 
       if (!fs.existsSync(fullPath)) {

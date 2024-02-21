@@ -1,6 +1,5 @@
-import { privileges } from '../../middleware/auth.js'
+import { privileges } from "../../middleware/auth.js";
 export const endPoint = {
-
   read: privileges.readMedicine,
-  write: privileges.writeMedicine
+  write: privileges.writeMedicine,
 };
