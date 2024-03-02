@@ -14,7 +14,8 @@ export const createCategory = joi.object({
         AR: joi.string().pattern(new RegExp(/^[\u0621-\u064A\u0660-\u0669 0-9]{2,2000}/)).required(),
         EN: joi.string().pattern(new RegExp(/[a-zA-Z0-9]{2,2000}$/)).required()
     }),
-    brandIds: joi.array().items(joi.string().custom(validateObjectId)),
+    // brandIds: joi.array().items(joi.string().custom(validateObjectId)) ssss,
+    brandIds: joi.string(),
     file: generalFields.file.required()
 }).required()
 
@@ -30,7 +31,8 @@ export const updateCategory = joi.object({
         AR: joi.string().pattern(new RegExp(/^[\u0621-\u064A\u0660-\u0669 0-9]{2,2000}/)),
         EN: joi.string().pattern(new RegExp(/[a-zA-Z0-9]{2,2000}$/))
     }),
-    brandIds: joi.array().items(joi.string().custom(validateObjectId)),
+    // brandIds: joi.array().items(joi.string().custom(validateObjectId)),
+    brandIds: joi.string(),
     file: generalFields.file
 }).required()
 

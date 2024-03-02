@@ -24,7 +24,7 @@ const productSchema = new Schema({
 
     createdBy: { type: Types.ObjectId, ref: 'User', required: true },
     updatedBy: { type: Types.ObjectId, ref: 'User' },
-    wishUserList: [{ type: Types.ObjectId, ref: 'User' }],
+    // wishUserList: [{ type: Types.ObjectId, ref: 'User' }],
 
     isDeleted: { type: Boolean, default: false }
 

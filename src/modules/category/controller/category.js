@@ -49,7 +49,11 @@ export const getCategoryById = asyncHandler(async (req, res, next) => {
 
 export const createCategory = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
-    const { name, description, brandIds } = req.body;
+    const { name, description } = req.body;
+
+
+    let brandIds = req.body.brandIds?.split(",");
+
     if (
         await categoryModel.findOne({
             $or: [
@@ -140,14 +144,15 @@ export const updateCategory = asyncHandler(async (req, res, next) => {
     category.description.EN = req.body.description?.EN ? req.body.description?.EN : category.description.EN;
 
 
-    if (req.body.brandIds?.length) {
-        for (const [index, id] of req.body.brandIds.entries()) {
+    let brandIds = req.body.brandIds?.split(",");
+    if (brandIds?.length) {
+        for (const [index, id] of brandIds.entries()) {
             if (!await brandModel.findById(id)) {
                 return next(new Error(lang == "EN" ? 'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
             }
         }
     }
-    category.brandIds = req.body?.brandIds?.length ? _.uniq(req.body.brandIds) : category.brandIds;
+    category.brandIds = brandIds?.length ? _.uniq(brandIds) : category.brandIds;
 
 
     if (req.file) {
@@ -201,6 +206,8 @@ export const removeBrandItems = asyncHandler(async (req, res, next) => {
     return res.status(200).json({ message: 'Done', category })
 })
 
+
+//TODO not remove when it has product
 export const deleteCategory = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
     const { categoryId } = req.params;
