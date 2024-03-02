@@ -10,8 +10,7 @@ export const getCartData = async (req, res, next) => {
     //Check cart exist
     const cart = await cartModel.findOne({ userId: req.user._id }).populate([
         {
-            path: 'products.productId',
-            
+            path: 'products.productId',    
         }
     ])
 
