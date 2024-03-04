@@ -1,9 +1,10 @@
 import * as OneSignal from 'onesignal-node';
-
+// REST_API_Key : NTg0YzgyYzktMzUyMi00YTI2LWFmN2QtOTM4Y2MxMDIwODUz
+//  App Id: 236be9bc-6c91-4fd8-87fd-1a5acde7b78f
 // Create a new OneSignal client using your OneSignal App ID and REST API Key
 export const oneSignalClient = new OneSignal.Client({
-    userAuthKey: 'YOUR_REST_API_KEY',
-    app: { appAuthKey: 'YOUR_REST_API_KEY', appId: 'YOUR_APP_ID' }
+    userAuthKey: 'NTg0YzgyYzktMzUyMi00YTI2LWFmN2QtOTM4Y2MxMDIwODUz',
+    app: { appAuthKey: 'NTg0YzgyYzktMzUyMi00YTI2LWFmN2QtOTM4Y2MxMDIwODUz', appId: '236be9bc-6c91-4fd8-87fd-1a5acde7b78f' }
 });
 
 // Define the notification content

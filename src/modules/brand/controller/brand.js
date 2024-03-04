@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const getBrandList = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
-    const brand = await brandModel.find({ isDeleted: false }).populate([
+    const brand = await brandModel.find({ isDeleted: req.query.freeze == 'true' ? true : false }).populate([
         {
             path: "createdBy"
         },
@@ -126,6 +126,15 @@ export const updateBrand = asyncHandler(async (req, res, next) => {
 export const deleteBrand = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
     const brand = await brandModel.findByIdAndUpdate(req.params.brandId, { isDeleted: true, updatedBy: req.user._id }, { new: true })
+    if (!brand) {
+        return next(new Error(lang == "EN" ? 'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
+    }
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", brand })
+})
+
+export const unfreeze = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+    const brand = await brandModel.findByIdAndUpdate(req.params.brandId, { isDeleted: false, updatedBy: req.user._id }, { new: true })
     if (!brand) {
         return next(new Error(lang == "EN" ? 'In-valid brand ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
     }

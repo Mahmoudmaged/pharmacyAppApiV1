@@ -12,7 +12,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const getCategoryList = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
 
-    const categories = await categoryModel.find({ isDeleted: false }).populate([
+
+    const categories = await categoryModel.find({ isDeleted: req.query.freeze == 'true' ? true : false }).populate([
         {
             path: "createdBy"
         },
@@ -53,17 +54,17 @@ export const createCategory = asyncHandler(async (req, res, next) => {
 
 
     let brandIds = req.body.brandIds?.split(",");
+    const checkCategory = await categoryModel.findOne({
+        $or: [
+            { "name.EN": name.EN },
+            { "name.AR": name.AR },
 
+        ]
+    })
     if (
-        await categoryModel.findOne({
-            $or: [
-                { "name.EN": name.EN },
-                { "name.AR": name.AR },
-
-            ]
-        })
+        checkCategory
     ) {
-        return next(new Error(lang == "EN" ? `Duplicate category name` : "يوجد بالفعل فئه تحمل نفس العنوان من قبل", { cause: { code: 409, customCode: 1011 } }))
+        return next(new Error(lang == "EN" ? `Duplicate category name` : "يوجد بالفعل فئه تحمل نفس العنوان من قبل", { cause: { code: 409, customCode: 1011, } }))
 
     }
 
@@ -212,6 +213,17 @@ export const deleteCategory = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
     const { categoryId } = req.params;
     const category = await categoryModel.findOneAndUpdate({ _id: categoryId }, { isDeleted: true, updatedBy: req.user._id }, { new: true })
+    if (!category) {
+        return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
+    }
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", category })
+})
+
+
+export const unfreeze = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+    const { categoryId } = req.params;
+    const category = await categoryModel.findOneAndUpdate({ _id: categoryId }, { isDeleted: false, updatedBy: req.user._id }, { new: true })
     if (!category) {
         return next(new Error(lang == "EN" ? `In-valid category Id` : "عفوا لم يتم العثور علي هذه الفئه", { cause: { code: 404, customCode: 1004 } }))
     }

@@ -65,4 +65,13 @@ router.patch(
   categoryController.deleteCategory
 );
 
+
+router.patch(
+  "/:categoryId/unfreeze",
+  authentication(),
+  authorization(endPoint.write),
+  validation(validators.checkId),
+  categoryController.unfreeze
+);
+
 export default router;

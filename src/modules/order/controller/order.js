@@ -14,13 +14,15 @@ import Stripe from 'stripe';
 
 
 export const createOrder = async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
 
     const { address, phone, note, couponName, paymentType } = req.body;
 
     if (!req.body.products) {
         const cart = await cartModel.findOne({ userId: req.user._id })
         if (!cart?.products?.length) {
-            return next(new Error('empty cart', { cause: 400 }))
+            return next(new Error(lang == "EN" ? `empty cart` : "عفوا ولكن عربه التسوق فارغه", { cause: { code: 409, customCode: 1011 } }))
+
         }
         req.body.isCart = true
         req.body.products = cart.products
@@ -41,7 +43,6 @@ export const createOrder = async (req, res, next) => {
 
         const checkedProduct = await productModel.findOne({
             _id: product.productId,
-            stock: { $gte: product.quantity },
             isDeleted: false
         })
 
@@ -70,11 +71,10 @@ export const createOrder = async (req, res, next) => {
         subtotal,
         finalPrice: subtotal - (subtotal * ((req.body.coupon?.amount || 0) / 100)).toFixed(2),
         paymentType,
-        status: paymentType == "card" ? "waitPayment" : 'placed'
+        // status: paymentType == "card" ? "waitPayment" : 'placed'
+        status: 'placed'
     })
-
-    //   decrease product stock
-    for (const product of req.body.products) { await productModel.updateOne({ _id: product.productId }, { $inc: { stock: -parseInt(product.quantity) } }) }
+ 
     //push user id in  coupon usedBy
     if (req.body.coupon) {
         await couponModel.updateOne({ _id: req.body.coupon._id }, { $addToSet: { usedBy: req.user._id } })
@@ -84,82 +84,6 @@ export const createOrder = async (req, res, next) => {
         await emptyCart(req.user._id)
     } else {
         await deleteItemsFromCart(productIds, req.user._id)
-    }
-    // Generate PDF
-
-    // const invoice = {
-    //     shipping: {
-    //         name: req.user.userName,
-    //         address: order.address,
-    //         city: "Cairo",
-    //         state: "Cairo",
-    //         country: "Egypt",
-    //         postal_code: 94111
-    //     },
-    //     items: order.products,
-    //     subtotal: subtotal,
-    //     total: order.finalPrice,
-    //     invoice_nr: order._id,
-    //     date: order.createdAt
-    // };
-
-    // await createInvoice(invoice, "invoice.pdf");
-    // await sendEmail({
-    //     to: req.user.email, subject: 'Invoice', attachments: [
-    //         {
-    //             path: 'invoice.pdf',
-    //             contentType: 'application/pdf'
-    //         }
-    //     ]
-    // })
-    //payment
-    // if (order.paymentType == 'card') {
-    //     const stripe = new Stripe(process.env.STRIPE_KEY)
-    //     if (req.body.coupon) {
-    //         const coupon = await stripe.coupons.create({ percent_off: req.body.coupon.amount, duration: 'once' })
-    //         console.log(coupon);
-    //         req.body.couponId = coupon.id
-    //     }
-    //     const session = await payment({
-    //         stripe,
-    //         payment_method_types: ['card'],
-    //         mode: 'payment',
-    //         customer_email: req.user.email,
-    //         metadata: {
-    //             orderId: order._id.toString()
-    //         },
-    //         cancel_url: `${process.env.CANCEL_URL}?orderId=${order._id.toString()}`,
-    //         line_items: order.products.map(product => {
-    //             return {
-    //                 price_data: {
-    //                     currency: 'egp',
-    //                     product_data: {
-    //                         name: product.name
-    //                     },
-    //                     unit_amount: product.unitPrice * 100 // convert from cent to dollar
-    //                 },
-    //                 quantity: product.quantity
-    //             }
-    //         }),
-    //         discounts: req.body.couponId ? [{ coupon: req.body.couponId }] : []
-    //     })
-    //     return res.status(201).json({ message: "Done", order, session, url: session.url })
-    // }
-
-
-    if (order.paymentType == "card") {
-        const stripe = new Stripe(process.env.STRIPE_KEY);
-        const session = await payment({
-            stripe,
-            metadata:{
-                orderId: order._id.toString()
-            },
-            customer_email,
-            cancel_url : process.env.CANCEL_URL,
-            success_url : process.env.SUCCESS_URL,
-            line_items,
-            discounts
-        })
     }
 
 

@@ -1,0 +1,2363 @@
+{
+	"info": {
+		"_postman_id": "55e4ab40-a5b4-480d-8b27-b01b2c77b43b",
+		"name": "PharmacyApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9100371"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "client",
+					"item": [
+						{
+							"name": "complete signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"country\": \"Egypt\",\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"mahmoudelwan460@gmail.com\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\",\r\n    \"chronicDiseases\": [\r\n        \"65ca10a0407aad9733d2a291\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register new admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc3NDE2NzcsImV4cCI6MTczOTI3NzY3N30.Z9sM5ril1IxNaWtbHL0CZOPaGtdP4MvFiruaaJ4Xbi0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"mahmoud mmm mohamed\",\r\n    \"email\": \"mahmoudElwan4600000@gmail.com\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\",\r\n    \"gender\": \"male\",\r\n    \"phone\": \"+2 01142951602\",\r\n    \"country\":\"Egypt\",\r\n    \"chronicDiseases\":[\"65ca10a0407aad9733d2a291\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/registerAdmin",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"registerAdmin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"mahmoudElwan460@gmail.com\",\r\n    \"password\": \"Mahmoud@123\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/login",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pre signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"mahmoudelwan460@gmail.com\",\r\n    \"password\":\"Mahmoud@123\",\r\n    \"cPassword\":\"Mahmoud@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/pre/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"pre",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "confirmEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\":\"4913\",\r\n    \"email\":\"mahmoudelwan460@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/confirmEmail",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"confirmEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request forget password code",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/sendForgetCode",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"sendForgetCode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\",\r\n    \"forgetCode\":\"6252\",\r\n    \"password\":\"Mahmoud@123\",\r\n    \"cPassword\":\"Mahmoud@123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/forgetPassword",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new confirm email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/auth/newConfirmEmail",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"auth",
+								"newConfirmEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request new token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2MDYxOTAsImV4cCI6MTczOTE0MjE5MH0.3_PZv6sKXEQPVYtntQulQluvMA8HPPeCmWMHuXPgnZM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://pharmacyapp.eu-4.evennode.com/auth/newToken",
+							"protocol": "http",
+							"host": [
+								"pharmacyapp",
+								"eu-4",
+								"evennode",
+								"com"
+							],
+							"path": [
+								"auth",
+								"newToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "privilege",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"getUser\",\r\n    \"label\": \"system\"\r\n    // enum[\r\n    //     \"System\",\r\n    //     'Category',\r\n    //     \"Brand\",\r\n    // ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update privilege",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"updateCategory\",\r\n    \"label\":\"Category\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete  privilege",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/privilege/65b55a991271910b7b110ae9",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"privilege",
+								"65b55a991271910b7b110ae9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"user\", // unique name\r\n    \"privileges\": [\r\n        \"65cb79296aff5866e1297648\"   , \"65cb79266aff5866e1297640\" \r\n        // privilegeId _id\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add  privilege to role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDgwMjQ2NzYsImV4cCI6MTczOTU2MDY3Nn0.KNlUe7O3qOQOKhQfxSgltKhmBrOqzLjyKEeZwkc-jbs",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "EN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"privileges\": [\r\n        \"65ce631e12a686f3b1d8f07e\"   , \"65ce632b12a686f3b1d8f084\" \r\n     \r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65c89f7479edf7c95768f412/add",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65c89f7479edf7c95768f412",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update  role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NzMzNTksImV4cCI6MTczOTIwOTM1OX0.KWBWIj1KSC_oMOPc1662mfKhWqmILm3q-FXNnVigjwM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"admin\",\r\n    \"privileges\": [\r\n        \"65b596f330af6b936fd84317\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b59c7acf8c1cbab456590d",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b59c7acf8c1cbab456590d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete privilege",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NzMzNTksImV4cCI6MTczOTIwOTM1OX0.KWBWIj1KSC_oMOPc1662mfKhWqmILm3q-FXNnVigjwM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65c89f6679edf7c95768f40d/privilege/65c89ee679edf7c95768f408",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65c89f6679edf7c95768f40d",
+								"privilege",
+								"65c89ee679edf7c95768f408"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role/65b57e13e4a4b259473e064c",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role",
+								"65b57e13e4a4b259473e064c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"admin\",\r\n    \"privileges\": [\r\n        \"65b56836a9254413004d29f7\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/role",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "brand",
+			"item": [
+				{
+					"name": "get brand list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get brand by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65c8b4c72c4483b1a685345f",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65c8b4c72c4483b1a685345f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "ايفون",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "Iphonexs max",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/images.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65c8b4c72c4483b1a685349f?imageFolderName=bR-2x2l3D8-auIGaysm6O",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65c8b4c72c4483b1a685349f"
+							],
+							"query": [
+								{
+									"key": "imageFolderName",
+									"value": "bR-2x2l3D8-auIGaysm6O"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "soft delete brand",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65c8b4c72c4483b1a685349f/delete",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65c8b4c72c4483b1a685349f",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unfreeze",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand/65c8b4c72c4483b1a685349f/unfreeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand",
+								"65c8b4c72c4483b1a685349f",
+								"unfreeze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "ايفونننننمممممننن",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "Iphonexskkkklll",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/full-5-600x420.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/brand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"brand"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "wishlist",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NzMzNTksImV4cCI6MTczOTIwOTM1OX0.KWBWIj1KSC_oMOPc1662mfKhWqmILm3q-FXNnVigjwM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/wishlist",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add medicine to wishlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NzMzNTksImV4cCI6MTczOTIwOTM1OX0.KWBWIj1KSC_oMOPc1662mfKhWqmILm3q-FXNnVigjwM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/wishlist",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove medicine to wishlist Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NzMzNTksImV4cCI6MTczOTIwOTM1OX0.KWBWIj1KSC_oMOPc1662mfKhWqmILm3q-FXNnVigjwM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/wishlist/remove",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"wishlist",
+								"remove"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "اسنان",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "dentist desies",
+									"type": "text"
+								},
+								{
+									"key": "description[AR]",
+									"value": "تتتتت تتتتتت تتت 4785 تهتهته84868hhhhh",
+									"type": "text"
+								},
+								{
+									"key": "description[EN]",
+									"value": "joiouy 66 hiuyh iil56",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65c8b4c72c4483b1a685359f",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65c8b4c72c4483b1a685349f",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/2 - Copy.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name[AR]",
+									"value": "جلديهتتت",
+									"type": "text"
+								},
+								{
+									"key": "name[EN]",
+									"value": "skin desiesggg",
+									"type": "text"
+								},
+								{
+									"key": "description[AR]",
+									"value": "تتتتت تتتتتت تتت 4785 تهتهته84868hhhhh",
+									"type": "text"
+								},
+								{
+									"key": "description[EN]",
+									"value": "joiouy 66 hiuyh iil56",
+									"type": "text"
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "brandIds",
+									"value": "65b659e909f629af633ae8c4",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/sypo-social.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128?imageFolderName=zat4-W55H7rR4DbBIMgqS",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128"
+							],
+							"query": [
+								{
+									"key": "imageFolderName",
+									"value": "zat4-W55H7rR4DbBIMgqS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add brand to category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brandIds\":[\"65c8b4c72c4483b1a685349f\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65b67337ee0b7f6a62cd3abf/addBrand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65b67337ee0b7f6a62cd3abf",
+								"addBrand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove brand from category Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brandIds\":[\"65c8b4c72c4483b1a685349f\" , \"65b659e909f629af633ae8c4\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128/removeBrand",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128",
+								"removeBrand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128/delete",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128/unfreeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128",
+								"unfreeze"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chronicDisease",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"disease\":{\r\n        \"AR\":\"ضغط\",\r\n        \"EN\":\"blood preasure\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/chronicDisease",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"chronicDisease"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"disease\":{\r\n        \"AR\":\"ةةةسكر\",\r\n        \"EN\":\"Sugers\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/chronicDisease/65ca0feffa5815dd502ecd12",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"chronicDisease",
+								"65ca0feffa5815dd502ecd12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/chronicDisease",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"chronicDisease"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YjRlMDZhMGQxY2VkZjRhYTMwMjkxOCIsInJvbGUiOiJVc2VyIiwiZnVsbE5hbWUiOiJtYWhtb3VkIG1tbSBtb2hhbWVkIiwiaWF0IjoxNzA2MzgxMDc1LCJleHAiOjE3MDY0Njc0NzV9.__vJ8PiG-LkIXC6fKB3M6tg6Uku8qb8zLo2YTa9-ESw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/chronicDisease/65ca10a0407aad9733d2a291/delete",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"chronicDisease",
+								"65ca10a0407aad9733d2a291",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unfreeze",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/category/65c8f1e564fb2e2152116128/unfreeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"category",
+								"65c8f1e564fb2e2152116128",
+								"unfreeze"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "medicine",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {\r\n        \"AR\": \"تجري\",\r\n        \"EN\": \"tests\"\r\n    },\r\n    \"description\": {\r\n        \"AR\": \"تمنتمنتهخت\",\r\n        \"EN\": \"nkhiuohiuhuih\"\r\n    },\r\n    \"mainPrice\": 50,\r\n    \"discountPercent\": 20,\r\n    \"isDrug\": false,\r\n   \r\n    \"brand\": \"65c8b4c72c4483b1a685349f\",\r\n    \"category\": \"65c8f1e564fb2e2152116128\",\r\n    \"sideEffects\": [\r\n        {\r\n            \"AR\": \"يسبب الحكه\",\r\n            \"EN\": \"allergy\"\r\n        },\r\n        {\r\n            \"AR\": \"تقئ\",\r\n            \"EN\": \"Vomiting\"\r\n        }\r\n    ],\r\n    \"indicationsForUse\": [\r\n        {\r\n            \"AR\": \"يجب الاستخدام بعد الاكل ب  15 دقيقه\",\r\n            \"EN\": \"take bills 15 min pat the food meal\"\r\n        }\r\n    ],\r\n    \"dose\": [\r\n        {\r\n            \"startAge\": 0,\r\n            \"endAge\": 2,\r\n            \"dose\": {\r\n                \"AR\": \"حبيتين\",\r\n                \"EN\": \"two pills\"\r\n            }\r\n        }\r\n    ]\r\n \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {\r\n        \"AR\": \"ةةةةتجري\",\r\n        \"EN\": \"testssss\"\r\n    },\r\n    \"description\": {\r\n        \"AR\": \"تمنتمنتهخت\",\r\n        \"EN\": \"nkhiuohiuhuih\"\r\n    },\r\n    \"mainPrice\": 50,\r\n    \"discountPercent\": 20,\r\n    \"isDrug\": false,\r\n    \"brand\": \"65c8b4c72c4483b1a685349f\",\r\n    \"category\": \"65c8f1e564fb2e2152116128\",\r\n    \"sideEffects\": [\r\n        {\r\n            \"AR\": \"يسبب الحكه\",\r\n            \"EN\": \"allergy\"\r\n        },\r\n        {\r\n            \"AR\": \"تقئ\",\r\n            \"EN\": \"Vomiting\"\r\n        }\r\n    ],\r\n    \"indicationsForUse\": [\r\n        {\r\n            \"AR\": \"يجب الاستخدام بعد الاكل ب  15 دقيقه\",\r\n            \"EN\": \"take bills 15 min pat the food meal\"\r\n        }\r\n    ],\r\n    \"dose\": [\r\n        {\r\n            \"startAge\": 0,\r\n            \"endAge\": 2,\r\n            \"dose\": {\r\n                \"AR\": \"حبيتين\",\r\n                \"EN\": \"two pills\"\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caa5070bfd79334afc1543",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caa5070bfd79334afc1543"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update medicine variant",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"size\":\"60 mg\",\r\n    \"color\":\"blue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caa5070bfd79334afc1543/variant/65caa5080bfd79334afc1549",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caa5070bfd79334afc1543",
+								"variant",
+								"65caa5080bfd79334afc1549"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Freeze medicine variant",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caa5070bfd79334afc1543/variant/65caa5080bfd79334afc1549/freeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caa5070bfd79334afc1543",
+								"variant",
+								"65caa5080bfd79334afc1549",
+								"freeze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unFreeze medicine variant",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caa5070bfd79334afc1543/variant/65caa5080bfd79334afc1549/unfreeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caa5070bfd79334afc1543",
+								"variant",
+								"65caa5080bfd79334afc1549",
+								"unfreeze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete medicine image",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dest\":\"uploads/medicine/As4CE7V1uM7ZYp1hwrg8w/PkWdDx3zveDE4xzuPhr6T_rigel-food-sec-2-img5-200x200.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/image",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add images to medicine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img3-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img4-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img5-200x200.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/image?imageFolderName=As4CE7V1uM7ZYp1hwrg8w",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"image"
+							],
+							"query": [
+								{
+									"key": "imageFolderName",
+									"value": "As4CE7V1uM7ZYp1hwrg8w"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "freeze medicine",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img3-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img4-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img5-200x200.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/freeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"freeze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unfreeze medicine Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img3-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img4-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img5-200x200.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7/unfreeze",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7",
+								"unfreeze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get medicine by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img3-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img4-200x200.jpg",
+										"/E:/course route/frontend/seesions/images/rigel-food-sec-2-img5-200x200.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/65caad3064b0b79f94522dc7",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"65caad3064b0b79f94522dc7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all medicine by categoryId  or brandid or both even all with no filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"categoryId\": \"65c8b4c72c4483b1a685349f\",\r\n    // \"brandId\": \"65c8b4c72c4483b1a685349f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/medicine/search?keyword=ت",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"medicine",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "ت"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pharmacy",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "request forget password code Copy",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/sendForgetCode",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"sendForgetCode"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forget password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\",\r\n    \"forgetCode\":\"6252\",\r\n    \"password\":\"Mahmoud@123\",\r\n    \"cPassword\":\"Mahmoud@123\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/auth/forgetPassword",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"auth",
+										"forgetPassword"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "new confirm email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mahmoudelwan460@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/newConfirmEmail",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"newConfirmEmail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "request new token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2MDYxOTAsImV4cCI6MTczOTE0MjE5MH0.3_PZv6sKXEQPVYtntQulQluvMA8HPPeCmWMHuXPgnZM\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/newToken",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"newToken"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register pharmacy (headquarter)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": {\r\n        \"AR\": \"صيدليتي\",\r\n        \"EN\": \"pharmacy one\"\r\n    },\r\n    \"address\": {\r\n        \"country\": \"Egypt\",\r\n        \"city\": \"cairo\",\r\n        \"gov\": \"cairo\",\r\n        \"details\": \"407 omer ibn khattab cairo egypt\",\r\n        \"location\":{\r\n            \"lang\":\"53468374683738783\",\r\n            \"lat\":\"53468374683738783\"\r\n        }\r\n    },\r\n    \"email\": \"routesession11@gmail.com\",\r\n    \"phone\": \"002 01142951602\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register pharmacy (Branch)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2UxMzdmZjJjOGNjMjJhMmIxNjZmZCIsImlhdCI6MTcwODAxODI2NSwiZXhwIjoxNzM5NTU0MjY1fQ.ovB4NhY3S_-gQY1Jk_VPzi8CV4pU_Lrxutwh2HZa1s4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": {\r\n        \"AR\": \"صيدليتي\",\r\n        \"EN\": \"pharmacy one\"\r\n    },\r\n    \"address\": {\r\n        \"country\": \"Egypt\",\r\n        \"city\": \"cairo\",\r\n        \"gov\": \"cairo\",\r\n        \"details\": \"407 omer ibn khattab cairo egypt\",\r\n        \"location\":{\r\n            \"lang\":\"53468374683738783\",\r\n            \"lat\":\"53468374683738783\"\r\n        }\r\n    },\r\n    \"email\": \"routesession111@gmail.com\",\r\n    \"phone\": \"002 01142951602\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/branch/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"branch",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login pharmacy (owner & manger)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": {\r\n        \"AR\": \"صيدليتي\",\r\n        \"EN\": \"pharmacy one\"\r\n    },\r\n    \"email\": \"routesession11@gmail.com\",\r\n    \"phone\":\"002 01142951602\",\r\n    \"country\":\"Egypt\",\r\n    \"password\": \"Mahmoud@123\",\r\n    \"cPassword\": \"Mahmoud@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/signup",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "employee login to pharmacy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"pharmacyEmail\": \"routesession11@gmail.com\",\r\n    \"employeeEmail\": \"mahmoudelwan4600@gmail.com\",\r\n    \"employeePassword\": \"Mahmoud@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/employee/login",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"employee",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "confirm email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"email\": \"routesession11@gmail.com\",\r\n    \"code\":\"1895\"\r\n \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{pharmacyBaseURL}}/pharmacy/confirmEmail",
+									"host": [
+										"{{pharmacyBaseURL}}"
+									],
+									"path": [
+										"pharmacy",
+										"confirmEmail"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "licence",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2UxMzdmZjJjOGNjMjJhMmIxNjZmZCIsImlhdCI6MTcwODAwNDI3NSwiZXhwIjoxNzM5NTQwMjc1fQ.giFqRIo-FH8KAJtGqcq6yHax0FqCEtotqfijbLQJeY8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "license",
+									"type": "file",
+									"src": "/E:/course route/frontend/resoueces/CSS.pdf"
+								},
+								{
+									"key": "commercialRegister",
+									"type": "file",
+									"src": "/E:/course route/frontend/resoueces/CSS3.pdf"
+								},
+								{
+									"key": "taxCard",
+									"type": "file",
+									"src": "/E:/course route/frontend/resoueces/HTML.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/pharmacy/65ce137ff2c8cc22a2b166fd/certificates?imageFolderName=3bBhTw3UnzwzHbdHmAhev",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"pharmacy",
+								"65ce137ff2c8cc22a2b166fd",
+								"certificates"
+							],
+							"query": [
+								{
+									"key": "imageFolderName",
+									"value": "3bBhTw3UnzwzHbdHmAhev"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "image",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2UxMzdmZjJjOGNjMjJhMmIxNjZmZCIsImlhdCI6MTcwODAwNDI3NSwiZXhwIjoxNzM5NTQwMjc1fQ.giFqRIo-FH8KAJtGqcq6yHax0FqCEtotqfijbLQJeY8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/pexels-photo-103305.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/pharmacy/65ce137ff2c8cc22a2b166fd/image?imageFolderName=3bBhTw3UnzwzHbdHmAhev",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"pharmacy",
+								"65ce137ff2c8cc22a2b166fd",
+								"image"
+							],
+							"query": [
+								{
+									"key": "imageFolderName",
+									"value": "3bBhTw3UnzwzHbdHmAhev"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hire employee",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2UxMzdmZjJjOGNjMjJhMmIxNjZmZCIsImlhdCI6MTcwODAwNDI3NSwiZXhwIjoxNzM5NTQwMjc1fQ.giFqRIo-FH8KAJtGqcq6yHax0FqCEtotqfijbLQJeY8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/pexels-photo-103305.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/pharmacy/65ce137ff2c8cc22a2b166fd/employee/65c938ee394e1da8627a72d8/hire",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"pharmacy",
+								"65ce137ff2c8cc22a2b166fd",
+								"employee",
+								"65c938ee394e1da8627a72d8",
+								"hire"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fire employee",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2UxMzdmZjJjOGNjMjJhMmIxNjZmZCIsImlhdCI6MTcwODAwNDI3NSwiZXhwIjoxNzM5NTQwMjc1fQ.giFqRIo-FH8KAJtGqcq6yHax0FqCEtotqfijbLQJeY8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/course route/frontend/seesions/images/pexels-photo-103305.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/pharmacy/65ce137ff2c8cc22a2b166fd/employee/65c938ee394e1da8627a72d8/fire",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"pharmacy",
+								"65ce137ff2c8cc22a2b166fd",
+								"employee",
+								"65c938ee394e1da8627a72d8",
+								"fire"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve pharamcy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWM4OWY3NDc5ZWRmN2M5NTc2OGY0MTIiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDgwMTQyMjAsImV4cCI6MTczOTU1MDIyMH0.X6J-fKsUjhR2YPTEHISov3I1kVsibWfr77j3TEs9HCM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/admin/pharmacy/65ce137ff2c8cc22a2b166fd/request/approve",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"admin",
+								"pharmacy",
+								"65ce137ff2c8cc22a2b166fd",
+								"request",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "add to cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"65caad3064b0b79f94522dc7\",\r\n    \"quantity\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/cart",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove products from cart",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productIds\": [\"65caad3064b0b79f94522dc7\"]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/cart/remove",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"cart",
+								"remove"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "empty cart",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/cart/clear",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"cart",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get cart products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Hamada__eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzdmNWNiMWYxOTQwYzMxYjkyMDVkMyIsInJvbGUiOiI2NWI2YTc4NDEzNTI0ZjAwNWZlY2E1MmEiLCJmdWxsTmFtZSI6Im1haG1vdWQgbW1tIG1vaGFtZWQiLCJpYXQiOjE3MDc2NDY1NzksImV4cCI6MTczOTE4MjU3OX0.lKo6gnkpjxMQvEA3TIP83gZ7QWgp06jNDUW7tkPwfbc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{pharmacyBaseURL}}/cart",
+							"host": [
+								"{{pharmacyBaseURL}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "pharmacyBaseURL",
+			"value": "http://localhost:5000"
+		}
+	]
+}

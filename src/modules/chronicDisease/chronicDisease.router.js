@@ -39,4 +39,13 @@ router.patch(
   chronicDiseaseController.deleteChronicDisease
 );
 
+
+router.patch(
+  "/:chronicDiseaseId/unfreeze",
+  authentication(),
+  authorization(endPoint.write),
+  validation(validators.checkId),
+  chronicDiseaseController.unfreezeChronicDisease
+);
+
 export default router;

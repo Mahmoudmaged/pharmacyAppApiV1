@@ -59,8 +59,6 @@ export const createCart = async (req, res, next) => {
     return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", cart })
 }
 
-
-
 export async function deleteItemsFromCart(productIds, userId) {
     const cart = await cartModel.updateOne({ userId }, {
         $pull: {

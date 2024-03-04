@@ -4,7 +4,7 @@ import { asyncHandler } from '../../../utils/errorHandling.js';
 
 export const getChronicDiseaseList = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
-    const chronicDisease = await ChronicDiseaseModel.find({ isDeleted: false }).populate([
+    const chronicDisease = await ChronicDiseaseModel.find({ isDeleted: req.query.freeze == 'true' ? true : false }).populate([
         {
             path: "createdBy"
         },
@@ -77,7 +77,8 @@ export const updateChronicDisease = asyncHandler(async (req, res, next) => {
                 return next(new Error(
                     lang == "EN" ? `Sorry  cannot update chronicDisease with the old EN disease:${req.body.disease.EN}` : ` ${req.body.disease.EN}لا يمكن تحديث  بنفس الاسم الانجليزي`,
                     { cause: { code: 409, customCode: 1011 } }))
-            }        }
+            }
+        }
 
 
         if (await ChronicDiseaseModel.findOne({
@@ -95,16 +96,25 @@ export const updateChronicDisease = asyncHandler(async (req, res, next) => {
         }
 
     }
- 
+
 
     chronicDisease.updatedBy = req.user._id
     await chronicDisease.save()
     return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", chronicDisease })
 })
 
-export const deleteChronicDisease= asyncHandler(async (req, res, next) => {
+export const deleteChronicDisease = asyncHandler(async (req, res, next) => {
     const lang = req.headers.lang || "EN";
     const chronicDisease = await ChronicDiseaseModel.findByIdAndUpdate(req.params.chronicDiseaseId, { isDeleted: true, updatedBy: req.user._id }, { new: true })
+    if (!chronicDisease) {
+        return next(new Error(lang == "EN" ? 'In-valid chronicDisease ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
+    }
+    return res.status(200).json({ message: lang == "EN" ? 'Done' : "تم", chronicDisease })
+})
+
+export const unfreezeChronicDisease = asyncHandler(async (req, res, next) => {
+    const lang = req.headers.lang || "EN";
+    const chronicDisease = await ChronicDiseaseModel.findByIdAndUpdate(req.params.chronicDiseaseId, { isDeleted: false, updatedBy: req.user._id }, { new: true })
     if (!chronicDisease) {
         return next(new Error(lang == "EN" ? 'In-valid chronicDisease ID' : "لم يتم العثور علي  العلامه التجاريه", { cause: { code: 404, customCode: 1004 } }));
     }

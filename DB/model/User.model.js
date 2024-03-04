@@ -2,10 +2,10 @@ import mongoose, { Schema, Types, model } from "mongoose";
 const userSchema = new Schema(
   {
     fullName: {
-        type: String,
-        lowercase: true,
-        trim: true,
-    
+      type: String,
+      lowercase: true,
+      trim: true,
+
     },
     email: {
       type: String,
@@ -27,7 +27,7 @@ const userSchema = new Schema(
         lowercase: true,
         trim: true,
         enum: ["ذكر", "انثى"],
-        default:'ذكر'
+        default: 'ذكر'
       },
       EN: {
         type: String,
@@ -35,7 +35,7 @@ const userSchema = new Schema(
         lowercase: true,
         trim: true,
         enum: ["male", "female"],
-        default:'male'
+        default: 'male'
 
       },
     },
@@ -84,11 +84,12 @@ const userSchema = new Schema(
       country: { type: String, lowercase: true },
       city: { type: String, lowercase: true },
       gov: { type: String, lowercase: true },
-      details:String,
-      mainAddress:Boolean,
-      location:{lat:Number , lang:Number}
+      details: String,
+      mainAddress: Boolean,
+      location: { lat: Number, lang: Number }
 
     },
+
     height: { type: Number },
     weight: { type: Number },
     blood: { type: Number },

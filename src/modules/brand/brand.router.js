@@ -49,4 +49,13 @@ router.patch(
   brandController.deleteBrand
 );
 
+
+router.patch(
+  "/:brandId/unfreeze",
+  authentication(),
+  authorization(endPoint.write),
+  validation(validators.checkId),
+  brandController.unfreeze
+);
+
 export default router;
