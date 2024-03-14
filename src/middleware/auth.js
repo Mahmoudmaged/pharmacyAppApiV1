@@ -75,11 +75,11 @@ export const authentication = () => {
     if (req.originalUrl.startsWith("/pharmacy")) {
       user = await pharmacyModel
         .findById(decoded.id)
-        .select("userName email image changePasswordTime socketId");
+        .select("userName email image changePasswordTime socketId password");
     } else {
       user = await userModel
         .findById(decoded.id)
-        .select("userName email image role changePasswordTime socketId")
+        .select("userName email image role changePasswordTime socketId password")
         .populate([
           {
             path: "role",
