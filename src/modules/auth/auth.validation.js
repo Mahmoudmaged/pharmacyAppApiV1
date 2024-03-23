@@ -50,7 +50,7 @@ export const login = joi
   .object({
     email: generalFields.email,
     password: generalFields.password,
-    agent: joi.string().valid("web", "mobile").required(),
+    agent: joi.string().valid("web", "mobile"),
   })
   .required();
 
