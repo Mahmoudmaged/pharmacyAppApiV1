@@ -10,6 +10,7 @@ import { asyncHandler } from "../../../utils/errorHandling.js";
 import { nanoid, customAlphabet } from "nanoid";
 import { OAuth2Client } from "google-auth-library";
 import ChronicDiseaseModel from "../../../../DB/model/ChronicDisease.model.js";
+import { checkAgent } from "../agent.service.js";
 
 export const handelConfirmCode = async ({
   req,
@@ -22,7 +23,14 @@ export const handelConfirmCode = async ({
   const html = emailTemplate({ body: confirmCode });
 
   if (!(await sendEmail({ to: email, subject, html }))) {
-    return next(new Error(lang == "EN" ? "Email rejected" : " عفوا تم رفض هذا البريد الالكتروني برجاء التحقق منه", { cause: { code: 400 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Email rejected"
+          : " عفوا تم رفض هذا البريد الالكتروني برجاء التحقق منه",
+        { cause: { code: 400 } }
+      )
+    );
   }
   //hash confirmCode
   const hashConfirmCode = hash({ plaintext: confirmCode });
@@ -34,7 +42,14 @@ export const preSignup = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   //check email exist
   if (await userModel.findOne({ email: email })) {
-    return next(new Error(lang == "EN" ? "Email exist" : "عفوا يوجد حساب مسجل يحمل هذا البريد الالكتروني  بالفعل", { cause: { code: 409, customCode: 1011 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Email exist"
+          : "عفوا يوجد حساب مسجل يحمل هذا البريد الالكتروني  بالفعل",
+        { cause: { code: 409, customCode: 1011 } }
+      )
+    );
   }
   //sendEmail()
   const hashConfirmCode = await handelConfirmCode({ req, email });
@@ -46,7 +61,9 @@ export const preSignup = asyncHandler(async (req, res, next) => {
     password: hashPassword,
     confirmCode: hashConfirmCode,
   });
-  return res.status(201).json({ message: lang == "EN" ? "Done" : "تم التسجيل بنجاح", _id });
+  return res
+    .status(201)
+    .json({ message: lang == "EN" ? "Done" : "تم التسجيل بنجاح", _id });
 });
 
 export const completeSignup = asyncHandler(async (req, res, next) => {
@@ -55,19 +72,35 @@ export const completeSignup = asyncHandler(async (req, res, next) => {
   //check email exist
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم تسجيل هذا الحساب من قبل يرجا التسجيل اولا", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم تسجيل هذا الحساب من قبل يرجا التسجيل اولا",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
   if (!user.confirmEmail) {
-    return next(new Error(lang == "EN" ? "Please confirm your email first" : "عفوا لم يتم تحقيق هذا البريد الالكتروني من قبل برجاء التاكيد اولا ", { cause: { code: 404, customCode: 1007 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Please confirm your email first"
+          : "عفوا لم يتم تحقيق هذا البريد الالكتروني من قبل برجاء التاكيد اولا ",
+        { cause: { code: 404, customCode: 1007 } }
+      )
+    );
   }
 
   if (chronicDiseases?.length) {
     for (const [index, id] of chronicDiseases.entries()) {
-      if (!await ChronicDiseaseModel.findById(id)) {
-        return next(new Error(
-          lang == "EN" ?
-            'In-valid dieses ID' : "لم يتم العثور علي المرض",
-          { cause: { code: 404, customCode: 1004 } }));
+      if (!(await ChronicDiseaseModel.findById(id))) {
+        return next(
+          new Error(
+            lang == "EN" ? "In-valid dieses ID" : "لم يتم العثور علي المرض",
+            { cause: { code: 404, customCode: 1004 } }
+          )
+        );
       }
     }
   }
@@ -79,11 +112,16 @@ export const completeSignup = asyncHandler(async (req, res, next) => {
       fullName,
       country,
       chronicDiseases,
-      gender: { AR: gender == 'male' || gender == 'ذكر' ? 'ذكر' : 'انثى', EN: gender == 'male' || gender == 'ذكر' ? 'male' : 'female' },
+      gender: {
+        AR: gender == "male" || gender == "ذكر" ? "ذكر" : "انثى",
+        EN: gender == "male" || gender == "ذكر" ? "male" : "female",
+      },
       phone: { code: phone.split(" ")[0], number: phone.split(" ")[1] },
     }
   );
-  return res.status(201).json({ message: lang == "EN" ? "Done" : "تم التسجيل  بنجاح", _id });
+  return res
+    .status(201)
+    .json({ message: lang == "EN" ? "Done" : "تم التسجيل  بنجاح", _id });
 });
 
 export const loginWithGmail = asyncHandler(async (req, res, next) => {
@@ -161,20 +199,35 @@ export const loginWithGmail = asyncHandler(async (req, res, next) => {
   return res.status(201).json({ message: "Done", access_token, refresh_token });
 });
 
-
 export const confirmEmail = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
   const { code, email } = req.body;
   const user = await userModel.findOne({ email: email });
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
   if (user.confirmEmail) {
-    return next(new Error(lang == "EN" ? "Already confirmed" : 'تم التحقق مسبقا', { cause: { code: 400, customCode: 1005 } }));
+    return next(
+      new Error(lang == "EN" ? "Already confirmed" : "تم التحقق مسبقا", {
+        cause: { code: 400, customCode: 1005 },
+      })
+    );
   }
 
   if (!compare({ plaintext: code, hashValue: user.confirmCode })) {
-    return next(new Error(lang == "EN" ? "In-valid activation code" : "عفوا رقم التعريف غير صحيح", { cause: { code: 400, customCode: 1006 } }));
+    return next(
+      new Error(
+        lang == "EN" ? "In-valid activation code" : "عفوا رقم التعريف غير صحيح",
+        { cause: { code: 400, customCode: 1006 } }
+      )
+    );
   }
 
   await userModel.updateOne(
@@ -190,11 +243,22 @@ export const requestNewConfirmEmail = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
 
   if (user.confirmEmail) {
-    return next(new Error(lang == "EN" ? "Already confirmed" : 'تم التحقق مسبقا', { cause: { code: 400, customCode: 1005 } }));
+    return next(
+      new Error(lang == "EN" ? "Already confirmed" : "تم التحقق مسبقا", {
+        cause: { code: 400, customCode: 1005 },
+      })
+    );
   }
 
   //sendEmail()
@@ -204,27 +268,68 @@ export const requestNewConfirmEmail = asyncHandler(async (req, res, next) => {
     { confirmCode: hashConfirmCode },
     { new: true }
   );
-  return res.status(200).json({ message: lang == "EN" ? "Done" : 'تم' });
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم" });
 });
 
 export const login = asyncHandler(async (req, res, next) => {
   let lang = req.headers.lang || "EN";
+
   const { email, password } = req.body;
   //check email exist
   const user = await userModel.findOne({ email: email });
+  const isAllowed = await checkAgent({
+    agent: req.headers.agent,
+    role: user.role,
+  });
+  if (!isAllowed) {
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Sorry, not allowed to login from the mobile"
+          : " عفوا لا يمكنك الدخول من الموبايل",
+        { cause: { code: 403, customCode: 1003 } }
+      )
+    );
+  }
+
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
 
   if (!user.confirmEmail) {
-    return next(new Error(lang == "EN" ? "Please confirm your email first" : 'عفوا لم يتم تفعيل من هذا البريد الالكتروني بعد براجاء تفعيل  اولا', { cause: { code: 400, customCode: 1007 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Please confirm your email first"
+          : "عفوا لم يتم تفعيل من هذا البريد الالكتروني بعد براجاء تفعيل  اولا",
+        { cause: { code: 400, customCode: 1007 } }
+      )
+    );
   }
   if (!user.status == "blocked") {
-    return next(new Error(lang == "EN" ? "blocked account" : "عفوا تم تعليق هذا الحساب", { cause: { code: 400, customCode: 1008 } }));
+    return next(
+      new Error(lang == "EN" ? "blocked account" : "عفوا تم تعليق هذا الحساب", {
+        cause: { code: 400, customCode: 1008 },
+      })
+    );
   }
 
   if (!compare({ plaintext: password, hashValue: user.password })) {
-    return next(new Error(lang == "EN" ? "In-valid login data" : "عفوا يرجا التاكد من  البريد الالكتروني و كلمه السر", { cause: { code: 400, customCode: 1009 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "In-valid login data"
+          : "عفوا يرجا التاكد من  البريد الالكتروني و كلمه السر",
+        { cause: { code: 400, customCode: 1009 } }
+      )
+    );
   }
   const access_token = generateToken({
     payload: { id: user._id, role: user.role, fullName: user.fullName },
@@ -238,16 +343,26 @@ export const login = asyncHandler(async (req, res, next) => {
 
   user.status = "online";
   await user.save();
-  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم تسجيل الدخول بنجاح", access_token, refresh_token });
+  return res.status(200).json({
+    message: lang == "EN" ? "Done" : "تم تسجيل الدخول بنجاح",
+    access_token,
+    refresh_token,
+  });
 });
-
 
 export const sendForgetCode = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
   const { email } = req.body;
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
 
   const forgetCode = await handelConfirmCode({
@@ -256,7 +371,7 @@ export const sendForgetCode = asyncHandler(async (req, res, next) => {
     subject: "Forget password",
   });
   await userModel.updateOne({ email }, { forgetCode: forgetCode });
-  return res.status(200).json({ message: lang == "EN" ? "Done" : 'تم' });
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم" });
 });
 
 export const forgetPassword = asyncHandler(async (req, res, next) => {
@@ -265,18 +380,29 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
 
   const user = await userModel.findOne({ email });
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
 
   if (!compare({ plaintext: forgetCode, hashValue: user.forgetCode })) {
-    return next(new Error(lang == "EN" ? "In-valid reset code" : "تم ادخال كود خطاء", { cause: { code: 400, customCode: 1006 } }));
+    return next(
+      new Error(lang == "EN" ? "In-valid reset code" : "تم ادخال كود خطاء", {
+        cause: { code: 400, customCode: 1006 },
+      })
+    );
   }
 
   user.password = hash({ plaintext: password });
   user.forgetCode = null;
   user.changePasswordTime = Date.now();
   await user.save();
-  return res.status(200).json({ message: lang == "EN" ? "Done" : 'تم' });
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم" });
 });
 
 export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
@@ -285,14 +411,32 @@ export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
 
   const decoded = verifyToken({ token });
   if (!decoded?.id) {
-    return next(new Error(lang == "EN" ? "In-valid token payload" : "خطاء", { cause: { code: 400, customCode: 1010 } }));
+    return next(
+      new Error(lang == "EN" ? "In-valid token payload" : "خطاء", {
+        cause: { code: 400, customCode: 1010 },
+      })
+    );
   }
   const user = await userModel.findById(decoded.id);
   if (!user) {
-    return next(new Error(lang == "EN" ? "Not register account" : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات", { cause: { code: 404, customCode: 1004 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
   }
   if (parseInt(user.changePasswordTime?.getTime() / 1000) > decoded.iat) {
-    return next(new Error(lang == "EN" ? "Expired token" : "عفوا لقد قمت باستخدام جمله ارتباط منتهيه الصلاحيه برجاء تسجيل الدخول مجددا", { cause: { code: 400, customCode: 1012 } }));
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Expired token"
+          : "عفوا لقد قمت باستخدام جمله ارتباط منتهيه الصلاحيه برجاء تسجيل الدخول مجددا",
+        { cause: { code: 400, customCode: 1012 } }
+      )
+    );
   }
 
   const access_token = generateToken({
@@ -305,27 +449,39 @@ export const requestNewAccessToken = asyncHandler(async (req, res, next) => {
     expiresIn: 31536000, //1year 60 * 60 * 24 * 365
   });
 
-  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", access_token, refresh_token });
+  return res.status(200).json({
+    message: lang == "EN" ? "Done" : "تم",
+    access_token,
+    refresh_token,
+  });
 });
 
 // Register admin
 export const registerAdmin = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
-  const { fullName, email, phone, gender, password, country, chronicDiseases } = req.body;
+  const { fullName, email, phone, gender, password, country, chronicDiseases } =
+    req.body;
   //check email exist
   if (await userModel.findOne({ email: email })) {
-    return next(new Error(lang == "EN" ? "Email exist" : "عفوا يوجد حساب مسجل يحمل هذا البريد الالكتروني  بالفعل", { cause: { code: 409, customCode: 1011 } }));
-
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Email exist"
+          : "عفوا يوجد حساب مسجل يحمل هذا البريد الالكتروني  بالفعل",
+        { cause: { code: 409, customCode: 1011 } }
+      )
+    );
   }
-
 
   if (chronicDiseases?.length) {
     for (const [index, id] of chronicDiseases.entries()) {
-      if (!await ChronicDiseaseModel.findById(id)) {
-        return next(new Error(
-          lang == "EN" ?
-            'In-valid dieses ID' : "لم يتم العثور علي المرض",
-          { cause: { code: 404, customCode: 1004 } }));
+      if (!(await ChronicDiseaseModel.findById(id))) {
+        return next(
+          new Error(
+            lang == "EN" ? "In-valid dieses ID" : "لم يتم العثور علي المرض",
+            { cause: { code: 404, customCode: 1004 } }
+          )
+        );
       }
     }
   }
@@ -337,10 +493,13 @@ export const registerAdmin = asyncHandler(async (req, res, next) => {
   //create user
   const role = await roleModel.findOne({ title: "admin" });
   if (!role) {
-    return next(new Error(lang == "EN" ? "NO assigned role" : "برجاء اختيار صلاحيه المستخدم", { cause: { code: 400, customCode: 1013 } }));
+    return next(
+      new Error(
+        lang == "EN" ? "NO assigned role" : "برجاء اختيار صلاحيه المستخدم",
+        { cause: { code: 400, customCode: 1013 } }
+      )
+    );
   }
-
-
 
   const { _id } = await userModel.create({
     email,
@@ -348,9 +507,14 @@ export const registerAdmin = asyncHandler(async (req, res, next) => {
     fullName,
     country,
     password: hashPassword,
-    gender: { AR: gender == 'male' || gender == 'ذكر' ? 'ذكر' : 'انثى', EN: gender == 'male' || gender == 'ذكر' ? 'male' : 'female' },
+    gender: {
+      AR: gender == "male" || gender == "ذكر" ? "ذكر" : "انثى",
+      EN: gender == "male" || gender == "ذكر" ? "male" : "female",
+    },
     phone: { code: phone.split(" ")[0], number: phone.split(" ")[1] },
     role: role._id,
   });
-  return res.status(201).json({ message: lang == "EN" ? "Done" : "تم التسجيل بنجاح", _id });
+  return res
+    .status(201)
+    .json({ message: lang == "EN" ? "Done" : "تم التسجيل بنجاح", _id });
 });

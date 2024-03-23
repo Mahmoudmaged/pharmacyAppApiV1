@@ -47,6 +47,10 @@ export const validation = (schema, considerHeaders = false) => {
       inputsData.file = req.file || req.files;
     }
 
+    if (req.headers.agent) {
+      inputsData.agent = req.headers.agent;
+    }
+
     if (req.headers.authorization && considerHeaders) {
       inputsData = { authorization: req.headers.authorization };
     }
@@ -55,7 +59,8 @@ export const validation = (schema, considerHeaders = false) => {
     const validationResult = schema.validate(inputsData, { abortEarly: false });
     if (validationResult.error?.details) {
       return res.status(400).json({
-        errorMessage: lang == "EN" ? "Validation Err" : "خطاء في بيانات المدخله",
+        errorMessage:
+          lang == "EN" ? "Validation Err" : "خطاء في بيانات المدخله",
         customCode: 999,
         validationErr: validationResult.error.details,
       });
