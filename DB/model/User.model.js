@@ -80,15 +80,15 @@ const userSchema = new Schema(
       enum: ["SYSTEM", "FACEBOOK", "GOOGLE"],
     },
     country: { type: String, lowercase: true },
-    address: {
+    address: [{
       country: { type: String, lowercase: true },
       city: { type: String, lowercase: true },
       gov: { type: String, lowercase: true },
       details: String,
-      mainAddress: Boolean,
+      mainAddress: {type:Boolean , default:false},
       location: { lat: Number, lang: Number }
 
-    },
+    }],
 
     height: { type: Number },
     weight: { type: Number },

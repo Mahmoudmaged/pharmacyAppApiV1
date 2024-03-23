@@ -21,13 +21,30 @@ router.get(
 );
 
 // profile pic
-router.post(
-  "/profilePic",
+router.patch(
+  "/profile/pic",
   authentication(),
   // authorization(endPoint.write),
   diskFileUpload(folderNames.user, fileValidation.image).single("image"),
   validation(validators.profilePic),
   userController.profilePic
+);
+
+
+router.patch(
+  "/profile/password",
+  authentication(),
+  // authorization(endPoint.write),
+  validation(validators.updatePassword),
+  userController.updatePassword
+);
+
+router.patch(
+  "/profile/email",
+  authentication(),
+  // authorization(endPoint.write),
+  validation(validators.updateEmail),
+  userController.updateEmail
 );
 
 // location >> // to be completed >> TODO
