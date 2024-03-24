@@ -11,11 +11,13 @@ import userRouter from "./modules/user/user.router.js";
 import privilegeRouter from "./modules/privilege/privilege.router.js";
 import chronicDiseaseRouter from "./modules/chronicDisease/chronicDisease.router.js";
 import medicineRouter from "./modules/medicine/medicine.router.js";
-import wishlistRouter from './modules/wishlist/wishlist.router.js'
+import wishlistRouter from "./modules/wishlist/wishlist.router.js";
 import roleRouter from "./modules/role/role.router.js";
 import chatRouter from "./modules/chat/chat.router.js";
 import adminRouter from "./modules/admin/admin.router.js";
-import pharmacyRouter from './modules/pharmacy/pharmacy.router.js'
+import pharmacyRouter from "./modules/pharmacy/pharmacy.router.js";
+import ticketRouter from "./modules/ticket/ticket.router.js";
+
 import { globalErrorHandling } from "./utils/errorHandling.js";
 import cors from "cors";
 
@@ -60,6 +62,7 @@ const bootstrap = (app, express) => {
   app.use(`/brand`, branRouter);
   app.use(`/chat`, chatRouter);
   app.use(`/wishlist`, wishlistRouter);
+  app.use(`/ticket`, ticketRouter);
 
   app.all("*", (req, res, next) => {
     res.status(404).send("In-valid Routing Plz check url or method");

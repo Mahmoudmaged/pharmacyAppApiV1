@@ -30,7 +30,6 @@ router.patch(
   userController.profilePic
 );
 
-
 router.patch(
   "/profile/password",
   authentication(),
@@ -45,6 +44,13 @@ router.patch(
   // authorization(endPoint.write),
   validation(validators.updateEmail),
   userController.updateEmail
+);
+
+router.patch(
+  "/profile/address",
+  authentication(),
+  validation(validators.addAddress),
+  userController.addAddress
 );
 
 // location >> // to be completed >> TODO

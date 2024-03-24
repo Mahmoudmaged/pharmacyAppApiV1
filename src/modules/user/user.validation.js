@@ -7,19 +7,29 @@ export const profilePic = joi
   })
   .required();
 
-
 export const updatePassword = joi
   .object({
     oldPassword: generalFields.password,
     newPassword: generalFields.password,
-    cPassword: generalFields.cPassword.valid(joi.ref('newPassword')),
+    cPassword: generalFields.cPassword.valid(joi.ref("newPassword")),
   })
   .required();
 
-
+export const addAddress = joi
+  .object({
+    country: joi.string(),
+    city: joi.string(),
+    gov: joi.string(),
+    details: joi.string(),
+    location: joi.object({
+      lat: joi.number().required(),
+      lang: joi.number().required(),
+    }),
+  })
+  .required();
 
 export const updateEmail = joi
   .object({
-    email: generalFields.email
+    email: generalFields.email,
   })
   .required();

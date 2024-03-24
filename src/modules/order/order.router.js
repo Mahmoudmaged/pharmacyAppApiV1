@@ -9,6 +9,7 @@ import { authentication, authorization } from "../../middleware/auth.js";
 import { Router } from "express";
 const router = Router();
 
+// create order from cart
 router.post(
   "/",
   authentication(),
@@ -17,6 +18,8 @@ router.post(
   orderController.createOrder
 );
 
+// get orders
+router.get("/", authentication(), orderController.allOrders);
 router.patch(
   "/:orderId",
   authentication(),

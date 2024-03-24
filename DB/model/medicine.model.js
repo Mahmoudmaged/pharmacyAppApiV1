@@ -30,22 +30,28 @@ const medicineSchema = new Schema(
     imageFolderName: { type: String, required: true, unique: true },
     brand: { type: Types.ObjectId, ref: "Brand" },
     category: { type: Types.ObjectId, ref: "Category" },
-    sideEffects: [{
-      AR: { type: String, required: true },
-      EN: { type: String, required: true }
-    }],
-    indicationsForUse: [{
-      AR: { type: String },
-      EN: { type: String }
-    }], // TODO
-    dose: [{
-      startAge: Number,
-      endAge: Number,
-      dose: {
+    sideEffects: [
+      {
+        AR: { type: String, required: true },
+        EN: { type: String, required: true },
+      },
+    ],
+    indicationsForUse: [
+      {
         AR: { type: String },
-        EN: { type: String }
-      }
-    }], // TODO
+        EN: { type: String },
+      },
+    ], // TODO
+    dose: [
+      {
+        startAge: Number,
+        endAge: Number,
+        dose: {
+          AR: { type: String },
+          EN: { type: String },
+        },
+      },
+    ], // TODO
     createdBy: { type: Types.ObjectId, ref: "User", required: true },
     updatedBy: { type: Types.ObjectId, ref: "User" },
     // updatedBy: [
@@ -57,7 +63,6 @@ const medicineSchema = new Schema(
     // ],
 
     isDeleted: { type: Boolean, default: false },
-
   },
   {
     toJSON: { virtuals: true },
