@@ -10,7 +10,6 @@ import { asyncHandler } from "../../../utils/errorHandling.js";
 import { nanoid, customAlphabet } from "nanoid";
 import { OAuth2Client } from "google-auth-library";
 import ChronicDiseaseModel from "../../../../DB/model/ChronicDisease.model.js";
-import { checkAgent } from "../agent.service.js";
 
 export const handelConfirmCode = async ({
   req,
@@ -275,13 +274,24 @@ export const login = asyncHandler(async (req, res, next) => {
   let lang = req.headers.lang || "EN";
 
   const { email, password } = req.body;
+  const { agent } = req.headers;
   //check email exist
   const user = await userModel.findOne({ email: email });
-  const isAllowed = await checkAgent({
-    agent: req.headers.agent,
-    role: user.role,
-  });
-  if (!isAllowed) {
+
+  if (!user) {
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Not register account"
+          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
+        { cause: { code: 404, customCode: 1004 } }
+      )
+    );
+  }
+
+  const role = await roleModel.findById(user.role);
+
+  if (agent === "mobile" && role.title !== "user") {
     return next(
       new Error(
         lang == "EN"
@@ -292,13 +302,13 @@ export const login = asyncHandler(async (req, res, next) => {
     );
   }
 
-  if (!user) {
+  if (agent === "web" && role.title === "user") {
     return next(
       new Error(
         lang == "EN"
-          ? "Not register account"
-          : "عفوا لم يتم العثور علي هذا الحساب برجاء التاكد من البيانات",
-        { cause: { code: 404, customCode: 1004 } }
+          ? "Sorry, you only allowed to login from the mobile"
+          : "عفوا يمكنك الدخول من الموبايل فقط",
+        { cause: { code: 403, customCode: 1003 } }
       )
     );
   }
