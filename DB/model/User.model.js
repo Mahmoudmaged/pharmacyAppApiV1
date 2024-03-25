@@ -17,7 +17,7 @@ const userSchema = new Schema(
       required: [true, "password is required"],
     },
     phone: {
-      type: [Object],
+      type: [{ code: String, number: String }],
     },
     gender: {
       AR: {
@@ -69,9 +69,6 @@ const userSchema = new Schema(
           and force  all other login devices of the same user to enter the  new password
          */
     },
-    wishlist: {
-      type: [{ type: Types.ObjectId, ref: "Product" }],
-    },
     provider: {
       type: String,
       default: "SYSTEM",
@@ -89,9 +86,11 @@ const userSchema = new Schema(
       },
     ],
 
-    height: { type: Number },
-    weight: { type: Number },
-    blood: { type: Number },
+    measurements: {
+      height: { type: Number },
+      weight: { type: Number },
+      blood: { type: String, enum: ['o+', 'o-', 'a+', 'a-', 'B+', 'B-', 'AB+', 'AB-'] },
+    },
     chronicDiseases: [{ type: Types.ObjectId, ref: "ChronicDisease" }],
     playerId: { type: String },
   },
