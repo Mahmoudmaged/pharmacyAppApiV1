@@ -7,6 +7,11 @@ import { endpoint } from "./order.endPoint.js";
 import { authentication, authorization } from "../../middleware/auth.js";
 
 import { Router } from "express";
+import {
+  diskFileUpload,
+  fileValidation,
+  folderNames,
+} from "./../../utils/multer.js";
 const router = Router();
 
 // create order from cart
@@ -15,6 +20,9 @@ router.post(
   authentication(),
   authorization(endpoint.create),
   validation(validators.createOrder),
+  diskFileUpload(folderNames.prescription, fileValidation.image).single(
+    "image"
+  ),
   orderController.createOrder
 );
 

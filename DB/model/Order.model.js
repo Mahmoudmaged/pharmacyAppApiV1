@@ -47,6 +47,8 @@ const orderSchema = new Schema(
       employeeId: { type: Types.ObjectId, ref: "User" },
     },
     reason: String,
+    isDummy: { type: Boolean, default: false },
+    prescription: String,
   },
   {
     timestamps: true,

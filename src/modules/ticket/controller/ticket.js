@@ -1,4 +1,4 @@
-import productModel from "../../../../DB/model/Product.model.js";
+import medicineModel from "../../../../DB/model/medicine.model.js";
 import ticketModel from "../../../../DB/model/ticket.model.js";
 import { asyncHandler } from "./../../../utils/errorHandling.js";
 
@@ -48,7 +48,7 @@ export const ticketToOrder = asyncHandler(async (req, res, next) => {
   let subtotal = 0;
 
   for (let product of products) {
-    const checkedProduct = await productModel.findOne({
+    const checkedProduct = await medicineModel.findOne({
       _id: product.productId,
       isDeleted: false,
     });
@@ -84,12 +84,13 @@ export const ticketToOrder = asyncHandler(async (req, res, next) => {
       subtotal - (subtotal * ((req.body.coupon?.amount || 0) / 100)).toFixed(2),
     // paymentType,
     // status: paymentType == "card" ? "waitPayment" : 'placed'
+    isDummy: true,
   });
 
   ticket.status = "accepted";
   await ticket.save();
 
-  // send notification
+  // send notification to client
 
   return res.status(201).json({ message: lang == "EN" ? "Done" : "تم", order });
 });

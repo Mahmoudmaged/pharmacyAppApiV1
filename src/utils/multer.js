@@ -13,6 +13,7 @@ export const folderNames = {
   coupon: "coupon",
   user: "user",
   ticket: "ticket",
+  prescription: "prescription",
 };
 export const fileValidation = {
   image: ["image/jpeg", "image/png", "image/gif", "image/jpg"],

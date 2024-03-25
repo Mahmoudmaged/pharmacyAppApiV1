@@ -10,8 +10,9 @@ import payment from "../../../utils/payment.js";
 // import payment from '../../../utils/newPayment.js';
 
 import Stripe from "stripe";
+import medicineModel from "../../../../DB/model/medicine.model.js";
 
-export const createOrder = async (req, res, next) => {
+export const createOrder = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
 
   const { address, phone, note, couponName, paymentType } = req.body;
@@ -49,9 +50,10 @@ export const createOrder = async (req, res, next) => {
   const productIds = [];
   const finalProductList = [];
   let subtotal = 0;
+  let containDrug;
 
   for (let product of req.body.products) {
-    const checkedProduct = await productModel.findOne({
+    const checkedProduct = await medicineModel.findOne({
       _id: product.productId,
       isDeleted: false,
     });
@@ -60,11 +62,26 @@ export const createOrder = async (req, res, next) => {
       return next(
         new Error(
           lang == "EN"
-            ? ` product  with id ${product.productId} not found!`
+            ? ` product  with id ${checkedProduct._id} not found!`
             : "خطا فى رقم المنتج",
           { cause: { code: 404, customCode: 1015 } }
         )
       );
+    }
+
+    if (checkedProduct.isDrug) {
+      if (!req.file) {
+        return next(
+          new Error(
+            lang == "EN"
+              ? `  ${checkedProduct.name} product is a drug, you must upload the prescription!`
+              : `لابد من رفع الروشتة لمنتج ${checkedProduct.name}`,
+            { cause: { code: 400, customCode: 1017 } }
+          )
+        );
+      } else {
+        containDrug = true;
+      }
     }
     if (req.body.isCart) {
       // product  = > BSOn object
@@ -78,6 +95,10 @@ export const createOrder = async (req, res, next) => {
     finalProductList.push(product);
     subtotal += product.finalPrice;
   }
+
+  if (checkedProduct.isDrug && req.file) {
+  }
+
   const order = await orderModel.create({
     userId: req.user._id,
     address,
@@ -92,24 +113,32 @@ export const createOrder = async (req, res, next) => {
     // status: paymentType == "card" ? "waitPayment" : 'placed'
   });
 
-  //push user id in  coupon usedBy
-  if (req.body.coupon) {
-    await couponModel.updateOne(
-      { _id: req.body.coupon._id },
-      { $addToSet: { usedBy: req.user._id } }
-    );
-  }
-  // clear items cart
-  if (req.body.isCart) {
-    await emptyCart(req.user._id);
+  if (containDrug) {
+    order.isDummy = true;
+    order.prescription = req.file.dest;
+    await order.save();
+
+    // send notification to system
   } else {
-    await deleteItemsFromCart(productIds, req.user._id);
+    //push user id in  coupon usedBy
+    if (req.body.coupon) {
+      await couponModel.updateOne(
+        { _id: req.body.coupon._id },
+        { $addToSet: { usedBy: req.user._id } }
+      );
+    }
+    // clear items cart
+    if (req.body.isCart) {
+      await emptyCart(req.user._id);
+    } else {
+      await deleteItemsFromCart(productIds, req.user._id);
+    }
   }
 
   return res.status(201).json({ message: lang == "EN" ? "Done" : "تم", order });
-};
+});
 
-export const allOrders = async (req, res, next) => {
+export const allOrders = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
 
   const orders = await orderModel.find({ userId: req.user._id });
@@ -117,7 +146,12 @@ export const allOrders = async (req, res, next) => {
   return res
     .status(200)
     .json({ message: lang == "EN" ? "Done" : "تم", orders });
-};
+});
+
+export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
+  const { address, phone, coupon, orderId } = req.body;
+  // medicine check
+});
 
 export const cancelOrder = asyncHandler(async (req, res, next) => {
   const { orderId } = req.params;

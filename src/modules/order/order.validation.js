@@ -43,4 +43,5 @@ export const createOrder = joi.object({
         .required()
     )
     .min(1),
+  file: generalFields.file,
 });
