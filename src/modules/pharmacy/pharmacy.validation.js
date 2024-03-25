@@ -95,6 +95,7 @@ export const login = joi
     email: generalFields.email,
     password: generalFields.password,
     agent: joi.string().valid("web", "mobile").required(),
+    playerId: joi.string().required(),
   })
   .required();
 

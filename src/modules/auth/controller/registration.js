@@ -273,7 +273,7 @@ export const requestNewConfirmEmail = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler(async (req, res, next) => {
   let lang = req.headers.lang || "EN";
 
-  const { email, password } = req.body;
+  const { email, password, playerId } = req.body;
   const { agent } = req.headers;
   //check email exist
   const user = await userModel.findOne({ email: email });
@@ -352,6 +352,7 @@ export const login = asyncHandler(async (req, res, next) => {
   });
 
   user.status = "online";
+  user.playerId = playerId;
   await user.save();
   return res.status(200).json({
     message: lang == "EN" ? "Done" : "تم تسجيل الدخول بنجاح",

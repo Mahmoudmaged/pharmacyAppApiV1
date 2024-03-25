@@ -6,15 +6,14 @@ const pharmacySchema = new Schema(
         type: String,
         lowercase: true,
         required: true,
-        trim: true
+        trim: true,
       },
       EN: {
         type: String,
         lowercase: true,
         required: true,
-        trim: true
+        trim: true,
       },
-
     },
     email: {
       type: String,
@@ -24,7 +23,7 @@ const pharmacySchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'password is required'],
+      required: [true, "password is required"],
     },
     country: { type: String, lowercase: true },
 
@@ -33,16 +32,22 @@ const pharmacySchema = new Schema(
       city: { type: String, lowercase: true },
       gov: { type: String, lowercase: true },
       details: String,
-      location: { lat: String, lang: Number }
-    },//in profile
+      location: { lat: String, lang: Number },
+    }, //in profile
     times: Array, //in profile
-    phone: [{ code: String, number: String, mainNumber: { type: Boolean, default: false } }],
+    phone: [
+      {
+        code: String,
+        number: String,
+        mainNumber: { type: Boolean, default: false },
+      },
+    ],
 
-    license: String,//pdf file //in profile
+    license: String, //pdf file //in profile
     commercialRegister: String, //pdf file //in profile
     taxCard: String, //pdf file //in profile
 
-    tempLicense: String,//pdf file //in profile
+    tempLicense: String, //pdf file //in profile
     tempCommercialRegister: String, //pdf file //in profile
     tempTaxCard: String, //pdf file //in profile
 
@@ -79,6 +84,7 @@ const pharmacySchema = new Schema(
       default: false,
     },
     headquarter: { type: Types.ObjectId, ref: "Pharmacy" },
+    playerId: { type: String },
   },
   {
     timestamps: true,
@@ -96,5 +102,6 @@ const pharmacySchema = new Schema(
 //   }
 // );
 
-const pharmacyModel = mongoose.models.Pharmacy || model("Pharmacy", pharmacySchema);
+const pharmacyModel =
+  mongoose.models.Pharmacy || model("Pharmacy", pharmacySchema);
 export default pharmacyModel;

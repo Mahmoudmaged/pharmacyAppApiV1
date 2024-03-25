@@ -568,7 +568,7 @@ export const fireEmployee = asyncHandler(async (req, res, next) => {
 // pharmacy login //Done
 export const PharmacyLogin = asyncHandler(async (req, res, next) => {
   let lang = req.headers.lang || "EN";
-  const { email, password } = req.body;
+  const { email, password, playerId } = req.body;
   const { agent } = req.headers;
   //check email exist
   const user = await pharmacyModel.findOne({ email: email });
@@ -625,6 +625,9 @@ export const PharmacyLogin = asyncHandler(async (req, res, next) => {
     expiresIn: 31536000, //1year 60 * 60 * 24 * 365
   });
 
+  user.playerId = playerId;
+  await user.save();
+
   return res.status(200).json({
     message: lang == "EN" ? "Done" : "تم تسجيل الدخول بنجاح",
     access_token,
@@ -655,6 +658,17 @@ export const pharmacyEmployeeLogin = asyncHandler(async (req, res, next) => {
     );
   }
 
+  if (agent === "web") {
+    return next(
+      new Error(
+        lang == "EN"
+          ? "Sorry, you only allowed to login from the mobile"
+          : "عفوا يمكنك الدخول من الموبايل فقط",
+        { cause: { code: 403, customCode: 1003 } }
+      )
+    );
+  }
+
   if (!pharmacy.confirmEmail) {
     return next(
       new Error(
@@ -680,6 +694,8 @@ export const pharmacyEmployeeLogin = asyncHandler(async (req, res, next) => {
   const employee = pharmacy.employee.find((emp) => {
     return emp.email == employeeEmail.toLowerCase();
   });
+
+  // TODO >>> playerId
 
   if (!employee) {
     return next(

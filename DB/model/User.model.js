@@ -5,7 +5,6 @@ const userSchema = new Schema(
       type: String,
       lowercase: true,
       trim: true,
-
     },
     email: {
       type: String,
@@ -15,7 +14,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'password is required'],
+      required: [true, "password is required"],
     },
     phone: {
       type: [Object],
@@ -27,7 +26,7 @@ const userSchema = new Schema(
         lowercase: true,
         trim: true,
         enum: ["ذكر", "انثى"],
-        default: 'ذكر'
+        default: "ذكر",
       },
       EN: {
         type: String,
@@ -35,8 +34,7 @@ const userSchema = new Schema(
         lowercase: true,
         trim: true,
         enum: ["male", "female"],
-        default: 'male'
-
+        default: "male",
       },
     },
     DOB: String,
@@ -80,21 +78,22 @@ const userSchema = new Schema(
       enum: ["SYSTEM", "FACEBOOK", "GOOGLE"],
     },
     country: { type: String, lowercase: true },
-    address: [{
-      country: { type: String, lowercase: true },
-      city: { type: String, lowercase: true },
-      gov: { type: String, lowercase: true },
-      details: String,
-      mainAddress: {type:Boolean , default:false},
-      location: { lat: Number, lang: Number }
-
-    }],
+    address: [
+      {
+        country: { type: String, lowercase: true },
+        city: { type: String, lowercase: true },
+        gov: { type: String, lowercase: true },
+        details: String,
+        mainAddress: { type: Boolean, default: false },
+        location: { lat: Number, lang: Number },
+      },
+    ],
 
     height: { type: Number },
     weight: { type: Number },
     blood: { type: Number },
     chronicDiseases: [{ type: Types.ObjectId, ref: "ChronicDisease" }],
-    socketId: String,
+    playerId: { type: String },
   },
   {
     timestamps: true,
