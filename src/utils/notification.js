@@ -1,3 +1,4 @@
+import * as OneSignal from "@onesignal/node-onesignal";
 export const pushNotification = async ({
   name,
   enContent,
