@@ -14,22 +14,19 @@ export const createOrder = joi.object({
         lang: joi.number().required(),
       }),
     })
-    .required(),
+    .when("file", {
+      is: null,
+      then: joi.required(),
+    }),
   phone: joi
-    .array()
-    .items(
-      joi
-        .string()
-        .pattern(
-          new RegExp(
-            /^(002|\+2)?01[0125][0-9]{8}$|^(?:\+?0*?966)?0?(5[0-9]{8})$/
-          )
-        )
-        .required()
+    .string()
+    .pattern(
+      new RegExp(/^(002|\+2)?01[0125][0-9]{8}$|^(?:\+?0*?966)?0?(5[0-9]{8})$/)
     )
-    .min(1)
-    .max(3)
-    .required(),
+    .when("file", {
+      is: null,
+      then: joi.required(),
+    }),
   couponName: joi.string(),
   paymentType: joi.string().valid("cash", "card"),
   products: joi
@@ -43,5 +40,30 @@ export const createOrder = joi.object({
         .required()
     )
     .min(1),
-  file: generalFields.file,
+  file: generalFields.file.default(null),
+});
+
+export const confirmDummyOrder = joi.object({
+  orderId: generalFields.id.required(),
+  note: joi.string().min(1),
+  address: joi
+    .object({
+      country: joi.string(),
+      city: joi.string(),
+      gov: joi.string(),
+      details: joi.string(),
+      location: joi.object({
+        lat: joi.number().required(),
+        lang: joi.number().required(),
+      }),
+    })
+    .required(),
+  phone: joi
+    .string()
+    .pattern(
+      new RegExp(/^(002|\+2)?01[0125][0-9]{8}$|^(?:\+?0*?966)?0?(5[0-9]{8})$/)
+    )
+    .required(),
+  couponName: joi.string(),
+  paymentType: joi.string().valid("cash", "card"),
 });

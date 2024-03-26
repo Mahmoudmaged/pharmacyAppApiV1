@@ -38,6 +38,8 @@ export const privileges = {
 
   rejectPharmacy: "rejectPharmacy",
   approvePharmacy: "approvePharmacy",
+
+  // createOrder: "createOrder",
 };
 
 export const authentication = () => {
@@ -79,7 +81,9 @@ export const authentication = () => {
     } else {
       user = await userModel
         .findById(decoded.id)
-        .select("userName email image role changePasswordTime socketId password")
+        .select(
+          "userName email image role changePasswordTime socketId password"
+        )
         .populate([
           {
             path: "role",

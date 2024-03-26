@@ -28,8 +28,8 @@ router.post(
 router.post(
   "/order/:ticketId",
   authentication(),
-  validation(validators.ticketToOrder),
-  ticketController.ticketToOrder
+  validation(validators.ticketToDummyOrder),
+  ticketController.ticketToDummyOrder
 );
 
 export default router;

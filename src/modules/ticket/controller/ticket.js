@@ -1,5 +1,7 @@
+import { orderStatus } from "../../../../DB/model/Order.model.js";
 import medicineModel from "../../../../DB/model/medicine.model.js";
 import ticketModel from "../../../../DB/model/ticket.model.js";
+import { isExpired } from "../ticket.service.js";
 import { asyncHandler } from "./../../../utils/errorHandling.js";
 
 export const openTicketText = asyncHandler(async (req, res, next) => {
@@ -35,13 +37,36 @@ export const openTicketFile = asyncHandler(async (req, res, next) => {
   });
 });
 
-export const ticketToOrder = asyncHandler(async (req, res, next) => {
+export const ticketToDummyOrder = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
 
   const { products } = req.body;
   const { ticketId } = req.params;
 
   const ticket = await ticketModel.findById(ticketId);
+
+  if (!ticket)
+    return next(
+      new Error(
+        lang == "EN"
+          ? ` ticket  with id ${ticket._id} not found!`
+          : "لا يوجد طلب بهذا الرقم!",
+        { cause: { code: 404, customCode: 1015 } }
+      )
+    );
+
+  const ticketOpenDate = new Date(ticket.createdAt);
+  if (isExpired(ticketOpenDate)) {
+    ticket.status = "closed";
+    return next(
+      new Error(
+        lang == "EN"
+          ? ` ticket  with id ${ticket._id} exceeded the allowed time!!`
+          : " هذا الطلب تخطى الوقت المسوح به للقبول",
+        { cause: { code: 400, customCode: 1017 } }
+      )
+    );
+  }
   const userId = ticket.user;
   const productIds = [];
   const finalProductList = [];
@@ -66,29 +91,17 @@ export const ticketToOrder = asyncHandler(async (req, res, next) => {
 
     productIds.push(product.productId);
     product.name = checkedProduct.name;
-    product.unitPrice = checkedProduct.finalPrice;
-    product.finalPrice =
-      product.quantity * checkedProduct.finalPrice.toFixed(2);
+    product.unitPrice = checkedProduct.salePrice;
+    product.finalPrice = product.quantity * checkedProduct.salePrice.toFixed(2);
     finalProductList.push(product);
     subtotal += product.finalPrice;
   }
   const order = await orderModel.create({
     userId,
-    // address,
-    // phone,
-    // note,
     products: finalProductList,
-    // couponId: req.body.coupon?._id,
     subtotal,
-    finalPrice:
-      subtotal - (subtotal * ((req.body.coupon?.amount || 0) / 100)).toFixed(2),
-    // paymentType,
-    // status: paymentType == "card" ? "waitPayment" : 'placed'
-    isDummy: true,
+    status: orderStatus.dummy,
   });
-
-  ticket.status = "accepted";
-  await ticket.save();
 
   // send notification to client
 

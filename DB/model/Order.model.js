@@ -1,5 +1,14 @@
 import mongoose, { model, Schema, Types } from "mongoose";
 
+export const orderStatus = {
+  placed: "placed", // client placed normal order || client accepted dummy order
+  dummy: "dummy", // system accept the ticket || system accepted order with drugs
+  closedDummy: "closedDummy", // 24 hours passed with out action from system or client
+  rejected: "rejected", // system rejected order with drugs
+  onWay: "onWay",
+  delivered: "delivered",
+};
+
 const addressSchema = new Schema({
   country: { type: String, default: "Egypt", lowercase: true },
   city: { type: String, default: "cairo", lowercase: true },
@@ -41,14 +50,7 @@ const orderSchema = new Schema(
     status: {
       type: String,
       default: "placed",
-      enum: [
-        "placed", // client placed normal order || client accepted dummy order
-        "dummy", // system accept the ticket || system accepted order with drugs
-        "closed-dummy", // 24 hours passed with out action from system or client
-        "rejected", // system rejected order with drugs
-        "onWay",
-        "delivered",
-      ],
+      enum: Object.values(orderStatus),
     },
     pharmacy: {
       pharmacyId: { type: Types.ObjectId, ref: "Pharmacy" },

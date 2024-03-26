@@ -9,7 +9,7 @@ export const openTicketFile = joi
   .object({ file: generalFields.file.required() })
   .required();
 
-export const ticketToOrder = joi
+export const ticketToDummyOrder = joi
   .object({
     ticketId: generalFields.id,
     products: joi

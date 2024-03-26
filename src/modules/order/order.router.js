@@ -3,7 +3,7 @@ import * as validators from "./order.validation.js";
 import express from "express";
 import { validation } from "../../middleware/validation.js";
 
-import { endpoint } from "./order.endPoint.js";
+import { endPoint } from "./order.endPoint.js";
 import { authentication, authorization } from "../../middleware/auth.js";
 
 import { Router } from "express";
@@ -18,12 +18,21 @@ const router = Router();
 router.post(
   "/",
   authentication(),
-  authorization(endpoint.create),
-  validation(validators.createOrder),
+  // authorization(endPoint.createOrder),
   diskFileUpload(folderNames.prescription, fileValidation.image).single(
     "image"
   ),
+  validation(validators.createOrder),
   orderController.createOrder
+);
+
+// accept dummy order
+router.patch(
+  "/accept/:orderId",
+  authentication(),
+  // authorization(endPoint.createOrder),
+  validation(validators.confirmDummyOrder),
+  orderController.confirmDummyOrder
 );
 
 // get orders
@@ -31,7 +40,7 @@ router.get("/", authentication(), orderController.allOrders);
 router.patch(
   "/:orderId",
   authentication(),
-  authorization(endpoint.create),
+  // authorization(endPoint.create),
   validation(validators.cancelOrder),
   orderController.cancelOrder
 );
@@ -39,7 +48,7 @@ router.patch(
 router.patch(
   "/:orderId/admin",
   authentication(),
-  authorization(endpoint.create),
+  // authorization(endpoint.create),
   validation(validators.adminUpdateOrder),
   orderController.updateOrderStatusByAdmin
 );

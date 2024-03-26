@@ -1,5 +1,5 @@
 import couponModel from "../../../../DB/model/Coupon.model.js";
-import orderModel from "../../../../DB/model/Order.model.js";
+import orderModel, { orderStatus } from "../../../../DB/model/Order.model.js";
 import productModel from "../../../../DB/model/Product.model.js";
 import cartModel from "../../../../DB/model/Cart.model.js";
 import { asyncHandler } from "../../../utils/errorHandling.js";
@@ -12,6 +12,7 @@ import payment from "../../../utils/payment.js";
 import Stripe from "stripe";
 import medicineModel from "../../../../DB/model/medicine.model.js";
 
+// Done
 export const createOrder = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
 
@@ -47,6 +48,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     }
     req.body.coupon = coupon;
   }
+
   const productIds = [];
   const finalProductList = [];
   let subtotal = 0;
@@ -89,35 +91,36 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     }
     productIds.push(product.productId);
     product.name = checkedProduct.name;
-    product.unitPrice = checkedProduct.finalPrice;
-    product.finalPrice =
-      product.quantity * checkedProduct.finalPrice.toFixed(2);
+    product.unitPrice = checkedProduct.salePrice;
+    product.finalPrice = product.quantity * checkedProduct.salePrice.toFixed(2);
     finalProductList.push(product);
     subtotal += product.finalPrice;
   }
 
-  if (checkedProduct.isDrug && req.file) {
-  }
-
   const order = await orderModel.create({
     userId: req.user._id,
-    address,
-    phone,
     note,
     products: finalProductList,
-    couponId: req.body.coupon?._id,
     subtotal,
     finalPrice:
-      subtotal - (subtotal * ((req.body.coupon?.amount || 0) / 100)).toFixed(2),
-    paymentType,
-    // status: paymentType == "card" ? "waitPayment" : 'placed'
+      subtotal -
+      (
+        subtotal *
+        (((req.body.coupon?.amount && !containDrug) || 0) / 100)
+      ).toFixed(2),
+    ...(!containDrug && {
+      address,
+      phone,
+      paymentType,
+      couponId: req.body.coupon?._id,
+    }),
+    ...(containDrug && {
+      status: orderStatus.dummy,
+      prescription: req.file.dest,
+    }),
   });
 
   if (containDrug) {
-    order.isDummy = true;
-    order.prescription = req.file.dest;
-    await order.save();
-
     // send notification to system
   } else {
     //push user id in  coupon usedBy
@@ -138,6 +141,66 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   return res.status(201).json({ message: lang == "EN" ? "Done" : "تم", order });
 });
 
+export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
+  const { address, phone, couponName, paymentType, note } = req.body;
+  const { orderId } = req.params;
+
+  const order = await orderModel.findById(orderId);
+  if (!order) {
+    return next(
+      new Error(
+        lang == "EN"
+          ? ` order  with id ${order._id} not found!`
+          : "لا يوجد طلب بهذا الرقم!",
+        { cause: { code: 404, customCode: 1015 } }
+      )
+    );
+  }
+
+  const orderDate = new Date(order.createdAt);
+  if (isExpired(orderDate)) {
+    order.status = orderStatus.closedDummy;
+    return next(
+      new Error(
+        lang == "EN"
+          ? ` order with id ${order._id} exceeded the allowed time!`
+          : "هذا الطلب تخطى الوقت المسوح به للقبول",
+        { cause: { code: 400, customCode: 1017 } }
+      )
+    );
+  }
+
+  if (couponName) {
+    const coupon = await couponModel.findOne({
+      name: couponName.toLowerCase(),
+      usedBy: { $nin: req.user._id },
+    });
+    if (!coupon || coupon.expire.getTime() < Date.now()) {
+      return next(
+        new Error(
+          lang == "EN"
+            ? `In-valid or expired coupon`
+            : "لا يوجد كوبون بهذا الاسم",
+          { cause: { code: 404, customCode: 1015 } }
+        )
+      );
+    }
+    req.body.coupon = coupon;
+  }
+
+  order.address = address;
+  order.phone = phone;
+  order.couponId = req.body.coupon?._id;
+  finalPrice =
+    subtotal -
+    (order.subtotal * ((req.body.coupon?.amount || 0) / 100)).toFixed(2);
+  if (paymentType) order.paymentType = paymentType;
+  if (note) order.note = note;
+  order.status = orderStatus.placed;
+
+  await order.save();
+});
+
 export const allOrders = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
 
@@ -146,11 +209,6 @@ export const allOrders = asyncHandler(async (req, res, next) => {
   return res
     .status(200)
     .json({ message: lang == "EN" ? "Done" : "تم", orders });
-});
-
-export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
-  const { address, phone, coupon, orderId } = req.body;
-  // medicine check
 });
 
 export const cancelOrder = asyncHandler(async (req, res, next) => {
