@@ -26,37 +26,47 @@ router.post(
   orderController.createOrder
 );
 
-// accept dummy order
+// confirm dummy order
 router.patch(
-  "/accept/:orderId",
+  "/confirm/:orderId",
   authentication(),
   // authorization(endPoint.createOrder),
   validation(validators.confirmDummyOrder),
   orderController.confirmDummyOrder
 );
 
-// get orders
-router.get("/", authentication(), orderController.allOrders);
-router.patch(
+// get user orders by client
+router.get(
+  "/",
+  authentication(),
+  validation(validators.allOrders),
+  orderController.allUserOrders
+);
+
+// get user orders by admins
+router.get(
+  "/admin",
+  authentication(),
+  validation(validators.allOrders),
+  orderController.allOrders
+);
+
+// single order
+router.get(
   "/:orderId",
   authentication(),
   // authorization(endPoint.create),
-  validation(validators.cancelOrder),
-  orderController.cancelOrder
+  validation(validators.singleOrder),
+  orderController.singleOrder
 );
 
+// update status
 router.patch(
   "/:orderId/admin",
   authentication(),
   // authorization(endpoint.create),
-  validation(validators.adminUpdateOrder),
+  validation(validators.updateOrderStatusByAdmin),
   orderController.updateOrderStatusByAdmin
-);
-
-router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  orderController.webhook
 );
 
 export default router;

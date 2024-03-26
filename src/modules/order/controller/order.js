@@ -141,6 +141,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   return res.status(201).json({ message: lang == "EN" ? "Done" : "تم", order });
 });
 
+// Done
 export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
   const { address, phone, couponName, paymentType, note } = req.body;
   const { orderId } = req.params;
@@ -201,105 +202,81 @@ export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
   await order.save();
 });
 
-export const allOrders = asyncHandler(async (req, res, next) => {
+// Done
+export const allUserOrders = asyncHandler(async (req, res, next) => {
   const lang = req.headers.lang || "EN";
+  const { dummy } = req.query; // true
 
-  const orders = await orderModel.find({ userId: req.user._id });
-
+  let orders;
+  orders = dummy
+    ? await orderModel.find({ userId: req.user._id })
+    : await orderModel.find({
+        userId: req.user._id,
+        status: orderStatus.dummy,
+      });
   return res
     .status(200)
     .json({ message: lang == "EN" ? "Done" : "تم", orders });
 });
 
-export const cancelOrder = asyncHandler(async (req, res, next) => {
+// Done
+export const allOrders = asyncHandler(async (req, res, next) => {
+  const lang = req.headers.lang || "EN";
+  const { dummy } = req.query; // true
+
+  let orders;
+  orders = dummy
+    ? await orderModel.find({})
+    : await orderModel.find({
+        status: orderStatus.dummy,
+      });
+  return res
+    .status(200)
+    .json({ message: lang == "EN" ? "Done" : "تم", orders });
+});
+
+// Done
+export const singleOrder = asyncHandler(async (req, res, next) => {
+  const lang = req.headers.lang || "EN";
   const { orderId } = req.params;
-  const { reason } = req.body;
-  const order = await orderModel.findOne({
-    _id: orderId,
-    userId: req.user._id,
-  });
+
+  const order = await orderModel.findById(orderId);
 
   if (!order) {
-    return next(new Error(`In-valid order Id`, { cause: 404 }));
-  }
-  if (
-    (order?.status != "placed" && order.paymentType == "cash") ||
-    (order?.status != "waitPayment" && order.paymentType == "card")
-  ) {
     return next(
       new Error(
-        `Cannot cancel your order after  it been changed to ${order.status}`,
-        { cause: 400 }
+        lang == "EN"
+          ? ` order  with id ${order._id} not found!`
+          : "لا يوجد طلب بهذا الرقم!",
+        { cause: { code: 404, customCode: 1015 } }
       )
     );
   }
-  const cancelOrder = await orderModel.updateOne(
-    { _id: order._id },
-    { status: "canceled", reason, updatedBy: req.user._id }
-  );
-  if (!cancelOrder.matchedCount) {
-    return next(new Error(`Fail to  cancel your order `, { cause: 400 }));
-  }
 
-  //   decrease product stock
-  for (const product of order.products) {
-    await productModel.updateOne(
-      { _id: product.productId },
-      { $inc: { stock: parseInt(product.quantity) } }
-    );
-  }
-  //push user id in  coupon usedBy
-  if (order.couponId) {
-    await couponModel.updateOne(
-      { _id: order.couponId },
-      { $pull: { usedBy: req.user._id } }
-    );
-  }
-
-  return res.status(200).json({ message: "Done" });
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", order });
 });
 
+// Done
 export const updateOrderStatusByAdmin = asyncHandler(async (req, res, next) => {
   const { orderId } = req.params;
   const { status } = req.body;
-  const order = await orderModel.findOne({ _id: orderId });
+  const lang = req.headers.lang || "EN";
+
+  const order = await orderModel.findById(orderId);
 
   if (!order) {
-    return next(new Error(`In-valid order Id`, { cause: 404 }));
-  }
-  const cancelOrder = await orderModel.updateOne(
-    { _id: order._id },
-    { status, updatedBy: req.user._id }
-  );
-  if (!cancelOrder.matchedCount) {
-    return next(new Error(`Fail to  updated your order `, { cause: 400 }));
-  }
-  return res.status(200).json({ message: "Done" });
-});
-
-export const webhook = asyncHandler(async (req, res) => {
-  const stripe = new Stripe(process.env.STRIPE_KEY);
-  const sig = req.headers["stripe-signature"];
-
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      process.env.endpointSecret
+    return next(
+      new Error(
+        lang == "EN"
+          ? ` order  with id ${order._id} not found!`
+          : "لا يوجد طلب بهذا الرقم!",
+        { cause: { code: 404, customCode: 1015 } }
+      )
     );
-  } catch (err) {
-    res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
   }
+  order.status = status;
+  order.updatedBy = req.user._id;
+  await order.save();
 
-  // Handle the event
-  const { orderId } = event.data.object.metadata;
-  if (event.type != "checkout.session.completed") {
-    await orderModel.updateOne({ _id: orderId }, { status: "rejected" });
-    return res.status(400).json({ message: "Rejected order" });
-  }
-  await orderModel.updateOne({ _id: orderId }, { status: "placed" });
-  return res.status(200).json({ message: "Done" });
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", order });
 });

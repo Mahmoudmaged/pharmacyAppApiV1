@@ -24,6 +24,7 @@ function isRequired() {
 const orderSchema = new Schema(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
+    updatedBy: { type: Types.ObjectId, ref: "User" },
     address: {
       type: addressSchema,
       required: isRequired,
