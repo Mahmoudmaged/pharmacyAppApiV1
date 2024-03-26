@@ -8,7 +8,7 @@ const ticketSchema = new Schema(
     status: {
       type: String,
       default: "opened",
-      enum: ["opened", "accepted", "canceled", "rejected", "closed"],
+      enum: ["opened", "closed"], // closed when system or client rejects the ticket
     },
     order: { type: Types.ObjectId, ref: "Order" },
   },

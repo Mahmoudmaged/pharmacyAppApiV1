@@ -1,17 +1,25 @@
 import mongoose, { model, Schema, Types } from "mongoose";
 
+const addressSchema = new Schema({
+  country: { type: String, default: "Egypt", lowercase: true },
+  city: { type: String, default: "cairo", lowercase: true },
+  gov: { type: String, lowercase: true },
+  details: String,
+  location: { lat: Number, lang: Number },
+});
+
+function isRequired() {
+  return this.status == "dummy" ? false : true;
+}
+
 const orderSchema = new Schema(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
-    updatedBy: { type: Types.ObjectId, ref: "User" },
     address: {
-      country: { type: String, default: "Egypt", lowercase: true },
-      city: { type: String, default: "cairo", lowercase: true },
-      gov: { type: String, lowercase: true },
-      details: String,
-      location: { lat: Number, lang: Number },
+      type: addressSchema,
+      required: isRequired,
     },
-    phone: [{ type: String, required: true }],
+    phone: { type: String, required: isRequired },
     note: String,
     products: [
       {
@@ -34,10 +42,10 @@ const orderSchema = new Schema(
       type: String,
       default: "placed",
       enum: [
-        "placed",
-        "accepted",
-        "canceled",
-        "rejected",
+        "placed", // client placed normal order || client accepted dummy order
+        "dummy", // system accept the ticket || system accepted order with drugs
+        "closed-dummy", // 24 hours passed with out action from system or client
+        "rejected", // system rejected order with drugs
         "onWay",
         "delivered",
       ],
@@ -47,7 +55,6 @@ const orderSchema = new Schema(
       employeeId: { type: Types.ObjectId, ref: "User" },
     },
     reason: String,
-    isDummy: { type: Boolean, default: false },
     prescription: String,
   },
   {
