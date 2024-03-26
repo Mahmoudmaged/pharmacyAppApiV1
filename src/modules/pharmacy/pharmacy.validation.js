@@ -42,6 +42,39 @@ export const signup = joi
   })
   .required();
 
+
+export const updatePharmacyBasicInfo = joi
+  .object({
+    name: joi
+      .object({
+        AR: joi
+          .string()
+          .pattern(new RegExp(/^[ ؀-ۿـ]{2,25}$/u))
+          .required(),
+        EN: joi
+          .string()
+          .pattern(new RegExp(/[a-zA-Z]{2,25}$/))
+          .required(),
+      }),
+
+    address: joi
+      .object({
+        country: joi.string().required(),
+        city: joi.string().required(),
+        gov: joi.string().required(),
+        details: joi.string().required(),
+        location: joi
+          .object({
+            lat: joi.string().required(),
+            lang: joi.string().required(),
+          })
+          .required(),
+      }),
+
+    pharmacyId: generalFields.id
+  })
+  .required();
+
 export const certificates = joi
   .object({
     imageFolderName: joi.string().required(),
@@ -152,3 +185,56 @@ export const registerAdmin = joi
     chronicDiseases: joi.array().items(generalFields.id),
   })
   .required();
+
+
+export const updateEmail = joi
+  .object({
+    pharmacyId: generalFields.id,
+    email: generalFields.email,
+  })
+  .required();
+
+
+export const updatePassword = joi
+  .object({
+    oldPassword: generalFields.password,
+    newPassword: generalFields.password,
+    cPassword: generalFields.cPassword.valid(joi.ref("newPassword")),
+    pharmacyId: generalFields.id,
+
+  })
+  .required();
+
+
+export const addPhone = joi
+  .object({
+    phone: joi.object({
+      code: joi.string().pattern(/^(002|\+2)$/).required(),
+      number: joi.string().pattern(/^01[0125][0-9]{8}$/).required(),
+      mainNumber: joi.boolean(),
+    }).required(),
+    pharmacyId: generalFields.id,
+  })
+  .required();
+export const deletePhone = joi
+  .object({
+    phoneId: joi.array().items(generalFields.id).required(),
+    pharmacyId: generalFields.id,
+  })
+  .required();
+
+
+export const markAsMainPhone = joi
+  .object({
+    phoneId: generalFields.id,
+    pharmacyId: generalFields.id,
+  })
+  .required();
+
+export const checkId = joi
+  .object({
+    pharmacyId: generalFields.id,
+  })
+  .required();
+
+
