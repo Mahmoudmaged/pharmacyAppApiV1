@@ -7,6 +7,14 @@ import { authentication, authorization } from "../../middleware/auth.js";
 import { endPoint } from './pharmacy.endPoint.js';
 
 const router = Router()
+router.get('/',
+    pharmacyController.pharmacyList
+);
+
+router.get('/:pharmacyId/profile',
+    validation(validators.checkId),
+    pharmacyController.getPharmacy
+);
 
 
 router.post('/signup',
@@ -74,11 +82,63 @@ router.patch("/forgetPassword",
     validation(validators.forgetPassword),
     pharmacyController.forgetPasswordToPharmacy)
 
-router.post("/newToken",
-    validation(validators.requestNewAccessToken),
-    pharmacyController.requestNewAccessToken)
 
 
+//////////////// Settings
+
+//update basicInfo
+router.put(
+    "/:pharmacyId/profile/info",
+    authentication(),
+    validation(validators.updatePharmacyBasicInfo),
+    pharmacyController.updatePharmacyBasicInfo
+)
+
+// //updatePassword 
+router.patch(
+    "/:pharmacyId/profile/password",
+    authentication(),
+    // authorization(endPoint.write),
+    validation(validators.updatePassword),
+    pharmacyController.updatePassword
+);
+//updateEmail
+router.patch(
+    "/:pharmacyId/profile/email",
+    authentication(),
+    // authorization(endPoint.write),
+    validation(validators.updateEmail),
+    pharmacyController.updateEmail
+);
+
+
+//add phone
+router.patch(
+    "/:pharmacyId/profile/phone/add",
+    authentication(),
+    // authorization(endPoint.write),
+    validation(validators.addPhone),
+    pharmacyController.addPhone
+);
+
+//delete phone
+router.patch(
+    "/:pharmacyId/profile/phone/delete",
+    authentication(),
+    // authorization(endPoint.write),
+    validation(validators.deletePhone),
+    pharmacyController.deletePhone
+);
+
+
+//delete phone
+router.patch(
+    "/:pharmacyId/profile/phone/:phoneId/markAsMain",
+    authentication(),
+    // authorization(endPoint.write),
+    validation(validators.markAsMainPhone),
+    pharmacyController.markAsMainPhone
+);
 
 
 export default router

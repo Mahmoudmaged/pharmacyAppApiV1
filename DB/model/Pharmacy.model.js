@@ -34,7 +34,12 @@ const pharmacySchema = new Schema(
       details: String,
       location: { lat: String, lang: Number },
     }, //in profile
-    times: Array, //in profile
+    // times: [{
+    //   open: { type: String },
+    //   close: { type: String },
+    //   allDay: { type: Boolean, default: false },
+    //   note: { type: String }
+    // }], //in profile 
     phone: [
       {
         code: String,
@@ -90,17 +95,6 @@ const pharmacySchema = new Schema(
     timestamps: true,
   }
 );
-
-// const pharmacySchema = new Schema(
-//   {
-//     mainBranch: { type: branchSchema, required: true },
-//     subBranches: { type: branchSchema},
-
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
 
 const pharmacyModel =
   mongoose.models.Pharmacy || model("Pharmacy", pharmacySchema);
