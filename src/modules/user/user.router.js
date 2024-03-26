@@ -19,6 +19,15 @@ router.get(
   // authorization(endPoint.read),
   userController.profile
 );
+// update profile basic info
+router.put(
+  "/profile",
+  authentication(),
+  // authorization(endPoint.read),
+  validation(validators.updateBasicInfo),
+
+  userController.updateBasicInfo
+);
 
 // profile pic
 router.patch(
@@ -30,6 +39,7 @@ router.patch(
   userController.profilePic
 );
 
+//updatePassword
 router.patch(
   "/profile/password",
   authentication(),
@@ -37,7 +47,7 @@ router.patch(
   validation(validators.updatePassword),
   userController.updatePassword
 );
-
+//updateEmail
 router.patch(
   "/profile/email",
   authentication(),
@@ -46,12 +56,89 @@ router.patch(
   userController.updateEmail
 );
 
+//add address
 router.patch(
   "/profile/address",
   authentication(),
   validation(validators.addAddress),
   userController.addAddress
 );
+
+//delete address
+router.patch(
+  "/profile/address/:addressId/delete",
+  authentication(),
+  validation(validators.checkId),
+  userController.deleteAddress
+);
+
+// markAsMainAddress as main address
+router.patch(
+  "/profile/address/:addressId/main",
+  authentication(),
+  validation(validators.checkId),
+  userController.markAsMainAddress
+);
+
+
+// add phone number
+router.patch(
+  "/profile/phone/add",
+  authentication(),
+  validation(validators.addPhone),
+  userController.addPhone
+);
+
+
+
+// remove phone number
+router.patch(
+  "/profile/phone/:phoneId/delete",
+  authentication(),
+  validation(validators.removePhone),
+  userController.removePhone
+);
+
+
+
+
+// add addChronicDaises 
+router.patch(
+  "/profile/chronicDaises/add",
+  authentication(),
+  validation(validators.ChronicDaises),
+  userController.addChronicDaises
+);
+
+
+
+// remove addChronicDaises 
+router.patch(
+  "/profile/chronicDaises/delete",
+  authentication(),
+  validation(validators.ChronicDaises),
+  userController.removeChronicDaises
+);
+
+
+// add addChronicDaises 
+router.patch(
+  "/profile/chronicDaises/add",
+  authentication(),
+  validation(validators.ChronicDaises),
+  userController.addChronicDaises
+);
+
+
+
+// remove addChronicDaises 
+router.patch(
+  "/profile/chronicDaises/delete",
+  authentication(),
+  validation(validators.ChronicDaises),
+  userController.removeChronicDaises
+);
+
 
 // location >> // to be completed >> TODO
 router.post(
