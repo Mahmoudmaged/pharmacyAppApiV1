@@ -214,7 +214,8 @@ export const allUserOrders = asyncHandler(async (req, res, next) => {
   orders = dummy
     ? await orderModel.find({ userId: req.user._id, status: orderStatus.dummy })
     : await orderModel.find({
-        userId: req.user._id, // TODO
+        userId: req.user._id,
+        status: { $ne: orderStatus.dummy },
       });
   return res
     .status(200)
@@ -229,7 +230,7 @@ export const allOrders = asyncHandler(async (req, res, next) => {
   let orders;
   orders = dummy
     ? await orderModel.find({ status: orderStatus.dummy })
-    : await orderModel.find({});
+    : await orderModel.find({ status: { $ne: orderStatus.dummy } });
   return res
     .status(200)
     .json({ message: lang == "EN" ? "Done" : "تم", orders });
@@ -276,7 +277,7 @@ export const updateOrderStatusByAdmin = asyncHandler(async (req, res, next) => {
   }
   order.status = status;
   order.updatedBy = req.user._id;
-  order.reason = status === orderStatus.rejected && reason;
+  if (status === orderStatus.rejected) order.reason = reason;
   await order.save();
 
   return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", order });

@@ -92,5 +92,9 @@ export const updateOrderStatusByAdmin = joi
       .string()
       .valid(...Object.values(orderStatus))
       .required(),
+    reason: joi.string().when("status", {
+      is: orderStatus.rejected,
+      then: joi.required(),
+    }),
   })
   .required();
