@@ -6,7 +6,7 @@ export const orderStatus = {
   closedDummy: "closedDummy", // 24 hours passed with out action from system or client
   rejected: "rejected", // system rejected order with drugs
   onWay: "onWay",
-  delivered: "delivered",
+  delivered: "delivered", // system
 };
 
 const addressSchema = new Schema({
@@ -30,7 +30,7 @@ const orderSchema = new Schema(
       required: isRequired,
     },
     phone: { type: String, required: isRequired },
-    note: String,
+    note: String, // client
     products: [
       {
         name: { type: String, required: true },
@@ -57,8 +57,8 @@ const orderSchema = new Schema(
       pharmacyId: { type: Types.ObjectId, ref: "Pharmacy" },
       employeeId: { type: Types.ObjectId, ref: "User" },
     },
-    reason: String,
-    prescription: String,
+    reason: String, // cancel
+    prescription: String, // if drug
   },
   {
     timestamps: true,

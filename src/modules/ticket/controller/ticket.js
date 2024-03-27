@@ -58,6 +58,7 @@ export const ticketToDummyOrder = asyncHandler(async (req, res, next) => {
   const ticketOpenDate = new Date(ticket.createdAt);
   if (isExpired(ticketOpenDate)) {
     ticket.status = "closed";
+    await ticket.save();
     return next(
       new Error(
         lang == "EN"

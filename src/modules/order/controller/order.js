@@ -160,7 +160,8 @@ export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
 
   const orderDate = new Date(order.createdAt);
   if (isExpired(orderDate)) {
-    order.status = orderStatus.closedDummy;
+    order.status = orderStatus.closedDummy; // TODO
+    order.reason = "exceeded time";
     return next(
       new Error(
         lang == "EN"
@@ -209,10 +210,9 @@ export const allUserOrders = asyncHandler(async (req, res, next) => {
 
   let orders;
   orders = dummy
-    ? await orderModel.find({ userId: req.user._id })
+    ? await orderModel.find({ userId: req.user._id, status: orderStatus.dummy })
     : await orderModel.find({
-        userId: req.user._id,
-        status: orderStatus.dummy,
+        userId: req.user._id, // TODO
       });
   return res
     .status(200)
@@ -226,10 +226,8 @@ export const allOrders = asyncHandler(async (req, res, next) => {
 
   let orders;
   orders = dummy
-    ? await orderModel.find({})
-    : await orderModel.find({
-        status: orderStatus.dummy,
-      });
+    ? await orderModel.find({ status: orderStatus.dummy })
+    : await orderModel.find({});
   return res
     .status(200)
     .json({ message: lang == "EN" ? "Done" : "تم", orders });
@@ -259,7 +257,7 @@ export const singleOrder = asyncHandler(async (req, res, next) => {
 // Done
 export const updateOrderStatusByAdmin = asyncHandler(async (req, res, next) => {
   const { orderId } = req.params;
-  const { status } = req.body;
+  const { status, reason } = req.body;
   const lang = req.headers.lang || "EN";
 
   const order = await orderModel.findById(orderId);
@@ -276,6 +274,7 @@ export const updateOrderStatusByAdmin = asyncHandler(async (req, res, next) => {
   }
   order.status = status;
   order.updatedBy = req.user._id;
+  order.reason = status === orderStatus.rejected && reason;
   await order.save();
 
   return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", order });

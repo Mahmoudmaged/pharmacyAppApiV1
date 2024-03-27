@@ -26,7 +26,7 @@ router.post(
   orderController.createOrder
 );
 
-// confirm dummy order
+// confirm dummy order by client
 router.patch(
   "/confirm/:orderId",
   authentication(),
