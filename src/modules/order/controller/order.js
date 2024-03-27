@@ -162,6 +162,7 @@ export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
   if (isExpired(orderDate)) {
     order.status = orderStatus.closedDummy; // TODO
     order.reason = "exceeded time";
+    await order.save();
     return next(
       new Error(
         lang == "EN"
@@ -199,8 +200,9 @@ export const confirmDummyOrder = asyncHandler(async (req, res, next) => {
   if (paymentType) order.paymentType = paymentType;
   if (note) order.note = note;
   order.status = orderStatus.placed;
-
   await order.save();
+
+  return res.status(200).json({ message: lang == "EN" ? "Done" : "تم", order });
 });
 
 // Done
